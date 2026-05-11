@@ -4,11 +4,32 @@
 
 PetOlife is a premium, high-fidelity landing page for a universal pet digital identity platform. It is built with zero external dependencies, optimized for performance, and designed to provide a "WOW" factor through modern glassmorphism and smooth animations.
 
-## 🚀 Quick Start
+## 🚀 Live Demo & Repo
 
-1. **Clone the repo**
-2. **Open `index.html`** in your browser.
-3. **Deploy** to Vercel or GitHub Pages in one click.
+- **Live Site**: [petolfe-launch-page.vercel.app](https://petolfe-launch-page.vercel.app/)
+- **GitHub Repository**: [KeshavxA/petolfe-launch-page](https://github.com/KeshavxA/petolfe-launch-page)
+
+## 🛠 Local Setup
+
+Since this is a high-performance, zero-dependency project, setup is instant:
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/KeshavxA/petolfe-launch-page.git
+   ```
+2. **Open the project**:
+   ```bash
+   cd petolfe-launch-page
+   open index.html
+   ```
+   *No npm install or build steps required.*
+
+## 🤖 AI-Powered Workflow
+
+This project was built using an advanced agentic workflow to maximize speed and quality:
+- **Antigravity AI Agent**: Orchestrated the entire development process, from planning to deployment-ready code.
+- **DALL-E 3 / Midjourney Integration**: Generated bespoke, high-fidelity brand assets to avoid generic placeholders.
+- **Automated CI/CD**: Seamless integration with Vercel for atomic deployments.
 
 ## 🎨 Design Philosophy
 
