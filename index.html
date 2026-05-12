@@ -197,6 +197,87 @@
             display: block;
         }
 
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            color: #fff;
+            text-align: left;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .overlay-name {
+            position: absolute;
+            top: 62%;
+            left: 10%;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            width: 35%;
+            text-align: center;
+        }
+
+        .overlay-breed {
+            position: absolute;
+            top: 73%;
+            left: 10%;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            width: 35%;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .overlay-chip {
+            position: absolute;
+            top: 71%;
+            left: 55%;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .id-form {
+            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            background: var(--glass);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            max-width: 450px;
+        }
+
+        .id-form input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            padding: 10px 15px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.85rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .id-form input:focus {
+            border-color: var(--accent-green);
+            background: rgba(46, 204, 113, 0.05);
+        }
+
+        .id-form label {
+            grid-column: span 2;
+            font-size: 0.75rem;
+            color: var(--accent-green);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: -0.5rem;
+        }
+
         .section {
             padding: 100px 10%;
         }
@@ -533,11 +614,22 @@
                     style="color: #fff; text-decoration: none; align-self: center; font-weight: 600; font-size: 0.9rem;">See
                     how it works →</a>
             </div>
+
+            <div class="id-form reveal" style="transition-delay: 0.3s;">
+                <label>Create Your Pet's First ID</label>
+                <input type="text" id="input-name" placeholder="Pet Name (e.g. Buddy)" maxlength="12">
+                <input type="text" id="input-breed" placeholder="Breed (e.g. Golden Retriever)" maxlength="20">
+                <input type="text" id="input-chip" placeholder="Chip ID (e.g. PID-1234)" style="grid-column: span 2;">
+            </div>
         </div>
         <div class="hero-visual">
             <div class="id-card-wrapper reveal" style="transition-delay: 0.2s;">
-
                 <img src="pet_digital_id_card.png" alt="Pet Digital ID Card" class="id-card">
+                <div class="card-overlay">
+                    <div class="overlay-name" id="card-name">BUDDY</div>
+                    <div class="overlay-breed" id="card-breed">GOLDEN RETRIEVER</div>
+                    <div class="overlay-chip" id="card-chip">PID-9980-A</div>
+                </div>
             </div>
         </div>
     </section>
@@ -776,6 +868,26 @@
                     scanTrigger.style.color = 'var(--accent-green)';
                 }, 3000);
             }, 1000);
+        });
+
+        // Live ID Creator Sync
+        const inputName = document.getElementById('input-name');
+        const inputBreed = document.getElementById('input-breed');
+        const inputChip = document.getElementById('input-chip');
+        const cardName = document.getElementById('card-name');
+        const cardBreed = document.getElementById('card-breed');
+        const cardChip = document.getElementById('card-chip');
+
+        inputName.addEventListener('input', (e) => {
+            cardName.innerText = e.target.value.toUpperCase() || 'BUDDY';
+        });
+
+        inputBreed.addEventListener('input', (e) => {
+            cardBreed.innerText = e.target.value.toUpperCase() || 'GOLDEN RETRIEVER';
+        });
+
+        inputChip.addEventListener('input', (e) => {
+            cardChip.innerText = e.target.value.toUpperCase() || 'PID-9980-A';
         });
     </script>
 </body>
