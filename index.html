@@ -577,6 +577,84 @@
             0% { transform: scale(0); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
+        /* --- Health Timeline --- */
+        .timeline-container {
+            max-width: 800px;
+            margin: 50px auto;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, var(--accent-green), transparent);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            width: 100%;
+            margin-bottom: 4rem;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            background: var(--bg-color);
+            border: 3px solid var(--accent-green);
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            box-shadow: 0 0 15px var(--accent-green);
+        }
+
+        .timeline-content {
+            width: 40%;
+            padding: 1.5rem;
+            background: var(--glass);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: auto;
+            margin-left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: auto;
+            margin-right: 0;
+            text-align: left;
+        }
+
+        .timeline-content h4 {
+            color: var(--accent-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .timeline-container::before { left: 20px; }
+            .timeline-dot { left: 20px; }
+            .timeline-content { width: 85%; margin-left: 50px !important; text-align: left !important; }
+        }
     </style>
 </head>
 
@@ -689,6 +767,43 @@
             <div class="feature-item">
                 <h4>Family Sync</h4>
                 <p>Shared access for family and sitters to keep everyone in the loop.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="timeline" class="section">
+        <div class="section-header reveal">
+            <h2>A Lifetime of Care</h2>
+            <p>From the first vaccine to the golden years, PetOlife stays with your pet forever.</p>
+        </div>
+        <div class="timeline-container">
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>The Beginning</h4>
+                    <p>Digital birth certificate and primary profile creation. Ownership established on the global registry.</p>
+                </div>
+            </div>
+            <div class="timeline-item reveal" style="transition-delay: 0.1s;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Early Protection</h4>
+                    <p>Automatic vaccine reminders and verification logs. AI-digitization of breeder records.</p>
+                </div>
+            </div>
+            <div class="timeline-item reveal" style="transition-delay: 0.2s;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Global Travel</h4>
+                    <p>Universal QR passport enabled. Cross-border health certifications synced automatically.</p>
+                </div>
+            </div>
+            <div class="timeline-item reveal" style="transition-delay: 0.3s;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Smart Monitoring</h4>
+                    <p>Annual check-up histories and specialized vet reports consolidated into a single timeline.</p>
+                </div>
             </div>
         </div>
     </section>
