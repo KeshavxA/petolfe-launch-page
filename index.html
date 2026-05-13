@@ -729,6 +729,75 @@
         @media (max-width: 768px) {
             .map-stats { flex-direction: column; gap: 2rem; text-align: center; }
         }
+
+        /* --- Share Modal --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .share-modal {
+            background: var(--deep-forest);
+            border: 1px solid var(--accent-green);
+            padding: 3rem;
+            border-radius: 30px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(46, 204, 113, 0.2);
+            transform: scale(0.9);
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active .share-modal {
+            transform: scale(1);
+        }
+
+        .share-code {
+            font-size: 3rem;
+            font-family: 'Outfit', sans-serif;
+            color: var(--accent-green);
+            letter-spacing: 10px;
+            margin: 2rem 0;
+            font-weight: 700;
+            background: rgba(46, 204, 113, 0.1);
+            padding: 1rem;
+            border-radius: 15px;
+        }
+
+        .qr-mock {
+            width: 150px;
+            height: 150px;
+            background: #fff;
+            margin: 0 auto 2rem;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
     </style>
 </head>
 
@@ -946,6 +1015,8 @@
                 <li style="margin-bottom: 0.5rem;">✓ GPS-aided recovery</li>
                 <li style="margin-bottom: 0.5rem;">✓ Health timeline tracking</li>
             </ul>
+            <button class="cta-btn" style="margin-top: 2rem; width: 100%;" id="open-share">Share Profile with Vet</button>
+        </div>
         </div>
         <div class="role-card vet reveal">
             <h3 style="color: #3498db; margin-bottom: 1rem;">For Veterinarians</h3>
@@ -996,6 +1067,30 @@
             Welcome to the pack! We've sent you a confirmation email.
         </div>
     </section>
+
+    <!-- Share Modal -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="share-modal">
+            <span class="close-modal" id="close-share">&times;</span>
+            <h3 style="color: #fff; margin-bottom: 1rem;">Secure Vet Access</h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">Share this temporary access code or QR with your veterinarian to transfer records.</p>
+            
+            <div class="share-code" id="access-code">000000</div>
+            
+            <div class="qr-mock">
+                <!-- Simple SVG QR Mock -->
+                <svg viewBox="0 0 100 100" fill="black">
+                    <rect width="25" height="25" />
+                    <rect x="75" width="25" height="25" />
+                    <rect y="75" width="25" height="25" />
+                    <rect x="25" y="25" width="50" height="50" fill="none" stroke="black" stroke-width="5" />
+                    <rect x="40" y="40" width="20" height="20" />
+                </svg>
+            </div>
+            
+            <p style="color: var(--accent-green); font-size: 0.8rem; font-weight: 600;">CODE EXPIRES IN 15:00</p>
+        </div>
+    </div>
 
     <footer>
         <div>© 2024 PetOlife Inc. All rights reserved.</div>
@@ -1110,6 +1205,37 @@
 
         inputChip.addEventListener('input', (e) => {
             cardChip.innerText = e.target.value.toUpperCase() || 'PID-9980-A';
+        });
+
+        // Share Modal Logic
+        const openShare = document.getElementById('open-share');
+        const closeShare = document.getElementById('close-share');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const accessCode = document.getElementById('access-code');
+
+        openShare.addEventListener('click', () => {
+            // Generate a random 6-digit code
+            const randomCode = Math.floor(100000 + Math.random() * 900000);
+            accessCode.innerText = randomCode;
+            
+            modalOverlay.style.display = 'flex';
+            setTimeout(() => {
+                modalOverlay.classList.add('active');
+            }, 10);
+        });
+
+        closeShare.addEventListener('click', () => {
+            modalOverlay.classList.remove('active');
+            setTimeout(() => {
+                modalOverlay.style.display = 'none';
+            }, 400);
+        });
+
+        // Close on overlay click
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                closeShare.click();
+            }
         });
     </script>
 </body>
