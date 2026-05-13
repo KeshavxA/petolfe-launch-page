@@ -561,8 +561,13 @@
         }
 
         @keyframes scan {
-            0% { top: 0; }
-            100% { top: 100%; }
+            0% {
+                top: 0;
+            }
+
+            100% {
+                top: 100%;
+            }
         }
 
         .verified-badge {
@@ -574,9 +579,17 @@
         }
 
         @keyframes popIn {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
+
         /* --- Health Timeline --- */
         .timeline-container {
             max-width: 800px;
@@ -651,10 +664,21 @@
         }
 
         @media (max-width: 768px) {
-            .timeline-container::before { left: 20px; }
-            .timeline-dot { left: 20px; }
-            .timeline-content { width: 85%; margin-left: 50px !important; text-align: left !important; }
+            .timeline-container::before {
+                left: 20px;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .timeline-content {
+                width: 85%;
+                margin-left: 50px !important;
+                text-align: left !important;
+            }
         }
+
         /* --- Global Map --- */
         .map-section {
             background: #000;
@@ -671,7 +695,7 @@
             border-radius: 40px;
             overflow: hidden;
             border: 1px solid var(--glass-border);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
         }
 
         .map-bg {
@@ -702,8 +726,15 @@
         }
 
         @keyframes nodePulse {
-            0% { transform: scale(0.5); opacity: 0.8; }
-            100% { transform: scale(2.5); opacity: 0; }
+            0% {
+                transform: scale(0.5);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(2.5);
+                opacity: 0;
+            }
         }
 
         .map-stats {
@@ -727,7 +758,11 @@
         }
 
         @media (max-width: 768px) {
-            .map-stats { flex-direction: column; gap: 2rem; text-align: center; }
+            .map-stats {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+            }
         }
 
         /* --- Share Modal --- */
@@ -737,7 +772,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
             z-index: 2000;
             display: none;
@@ -842,8 +877,13 @@
         }
 
         @keyframes pulseAlert {
-            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
-            100% { box-shadow: 0 0 0 20px transparent; }
+            0% {
+                box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4);
+            }
+
+            100% {
+                box-shadow: 0 0 0 20px transparent;
+            }
         }
 
         .pet-dot {
@@ -874,8 +914,78 @@
         }
 
         @keyframes slideDown {
-            from { top: -50px; }
-            to { top: 20px; }
+            from {
+                top: -50px;
+            }
+
+            to {
+                top: 20px;
+            }
+        }
+
+        /* --- AI Scanner --- */
+        .scanner-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: var(--glass);
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            padding: 2.5rem;
+            position: relative;
+        }
+
+        .scan-window {
+            width: 100%;
+            height: 350px;
+            background: #111;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            margin: 2rem 0;
+        }
+
+        .paper-record, .digital-record {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .paper-record {
+            filter: grayscale(1) blur(1px);
+            opacity: 0.4;
+            font-family: 'Courier New', Courier, monospace;
+            color: #ccc;
+        }
+
+        .digital-record {
+            background: var(--deep-forest);
+            color: var(--accent-green);
+            clip-path: inset(100% 0 0 0); /* Hidden initially */
+            transition: none; /* Controlled by JS laser */
+        }
+
+        .scan-laser {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-green);
+            box-shadow: 0 0 20px var(--accent-green);
+            z-index: 10;
+        }
+
+        .record-entry {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(46, 204, 113, 0.2);
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -940,7 +1050,8 @@
             <p>Today, pet data is scattered across paper records, different vet clinics, and outdated microchip
                 databases. This leads to critical delays and risks.</p>
             <div class="problem-visual reveal" style="margin-top: 40px;">
-                <img src="pet_data_chaos.png" alt="Fragmented Data Visualization" style="width: 100%; max-width: 800px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+                <img src="pet_data_chaos.png" alt="Fragmented Data Visualization"
+                    style="width: 100%; max-width: 800px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
             </div>
         </div>
         <div class="grid-3">
@@ -1003,7 +1114,8 @@
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
                     <h4>The Beginning</h4>
-                    <p>Digital birth certificate and primary profile creation. Ownership established on the global registry.</p>
+                    <p>Digital birth certificate and primary profile creation. Ownership established on the global
+                        registry.</p>
                 </div>
             </div>
             <div class="timeline-item reveal" style="transition-delay: 0.1s;">
@@ -1033,11 +1145,12 @@
     <section id="global" class="map-section section">
         <div class="section-header reveal">
             <h2>The Global Trust Network</h2>
-            <p>PetOlife is building the world's first decentralized pet recovery registry. A borderless shield for your pet.</p>
+            <p>PetOlife is building the world's first decentralized pet recovery registry. A borderless shield for your
+                pet.</p>
         </div>
         <div class="map-container reveal">
             <img src="global_map.png" alt="Global Network Map" class="map-bg">
-            
+
             <!-- Strategic Pulses -->
             <div class="pulse-node" style="top: 35%; left: 22%;"></div> <!-- NY -->
             <div class="pulse-node" style="top: 30%; left: 48%;"></div> <!-- London -->
@@ -1094,7 +1207,8 @@
                 <li style="margin-bottom: 0.5rem;">✓ GPS-aided recovery</li>
                 <li style="margin-bottom: 0.5rem;">✓ Health timeline tracking</li>
             </ul>
-            <button class="cta-btn" style="margin-top: 2rem; width: 100%;" id="open-share">Share Profile with Vet</button>
+            <button class="cta-btn" style="margin-top: 2rem; width: 100%;" id="open-share">Share Profile with
+                Vet</button>
         </div>
         </div>
         <div class="role-card vet reveal">
@@ -1117,12 +1231,13 @@
         <div class="safe-zone-widget reveal">
             <div class="alert-banner" id="alert-banner">⚠️ PET OUTSIDE SAFE ZONE</div>
             <h4 style="color: var(--accent-green); margin-bottom: 0.5rem;">Geofence Simulator</h4>
-            <p style="color: var(--text-secondary); font-size: 0.85rem;">Toggle the safe-zone and watch how the system reacts to unauthorized movement.</p>
-            
+            <p style="color: var(--text-secondary); font-size: 0.85rem;">Toggle the safe-zone and watch how the system
+                reacts to unauthorized movement.</p>
+
             <div class="map-viewport">
                 <div class="geofence-circle" id="geofence"></div>
                 <div class="pet-dot" id="pet-dot"></div>
-                
+
                 <!-- Mock Map Lines -->
                 <svg width="100%" height="100%" opacity="0.1">
                     <line x1="0" y1="50" x2="100%" y2="50" stroke="white" />
@@ -1131,8 +1246,47 @@
                     <line x1="300" y1="0" x2="300" y2="100%" stroke="white" />
                 </svg>
             </div>
-            
+
             <button class="cta-btn" id="simulate-btn" style="width: 100%;">Start Safety Simulation</button>
+        </div>
+    </section>
+
+    <section id="aiscanner" class="section">
+        <div class="section-header reveal">
+            <h2>AI-Powered Digitization</h2>
+            <p>End the paper chaos. Our AI engine converts old paper records into encrypted data in seconds.</p>
+        </div>
+        <div class="scanner-container reveal">
+            <h4 style="color: var(--accent-green); text-align: center;">Smart Scan Engine</h4>
+            
+            <div class="scan-window">
+                <!-- Messy Paper Layer -->
+                <div class="paper-record">
+                    <p style="margin-bottom: 20px;">VET CLINIC #0482 - LOGS</p>
+                    <p>PET: Buddy (Goldn Ret)</p>
+                    <p>Vaccine: Rabies - 12/04/22</p>
+                    <p>Weight: 32.5kg (approx)</p>
+                    <p>Notes: Healthy, slight ear irr...</p>
+                    <p>-------------------------</p>
+                    <p>Next Visit: Spring 2023</p>
+                </div>
+
+                <!-- Clean Digital Layer -->
+                <div class="digital-record" id="digital-record">
+                    <p style="font-weight: 700; margin-bottom: 20px; text-transform: uppercase;">✓ Verified Health Log</p>
+                    <div class="record-entry"><span>NAME</span> <span>BUDDY</span></div>
+                    <div class="record-entry"><span>SPECIES</span> <span>CANINE</span></div>
+                    <div class="record-entry"><span>VACCINE</span> <span>RABIES (CERTIFIED)</span></div>
+                    <div class="record-entry"><span>DATE</span> <span>APRIL 12, 2022</span></div>
+                    <div class="record-entry"><span>WEIGHT</span> <span>32.50 KG</span></div>
+                    <div class="record-entry"><span>STATUS</span> <span style="color: #fff; background: var(--accent-green); padding: 2px 8px; border-radius: 4px; font-size: 0.7rem;">VERIFIED</span></div>
+                </div>
+
+                <!-- The Laser -->
+                <div class="scan-laser" id="scan-laser"></div>
+            </div>
+
+            <button class="cta-btn" id="start-scan-btn" style="width: 100%;">Start AI Extraction</button>
         </div>
     </section>
 
@@ -1145,7 +1299,8 @@
             <div class="scan-box" id="scan-box">
                 <div class="scanner-line" id="scanner-line"></div>
                 <div id="demo-id-content">
-                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--text-secondary);">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                        style="color: var(--text-secondary);">
                         <rect x="3" y="4" width="18" height="16" rx="2" />
                         <circle cx="9" cy="10" r="2" />
                         <line x1="15" y1="8" x2="19" y2="8" />
@@ -1179,10 +1334,11 @@
         <div class="share-modal">
             <span class="close-modal" id="close-share">&times;</span>
             <h3 style="color: #fff; margin-bottom: 1rem;">Secure Vet Access</h3>
-            <p style="color: var(--text-secondary); font-size: 0.9rem;">Share this temporary access code or QR with your veterinarian to transfer records.</p>
-            
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">Share this temporary access code or QR with your
+                veterinarian to transfer records.</p>
+
             <div class="share-code" id="access-code">000000</div>
-            
+
             <div class="qr-mock">
                 <!-- Simple SVG QR Mock -->
                 <svg viewBox="0 0 100 100" fill="black">
@@ -1193,7 +1349,7 @@
                     <rect x="40" y="40" width="20" height="20" />
                 </svg>
             </div>
-            
+
             <p style="color: var(--accent-green); font-size: 0.8rem; font-weight: 600;">CODE EXPIRES IN 15:00</p>
         </div>
     </div>
@@ -1260,7 +1416,7 @@
                 const rotateY = (centerX - x) / 10;
                 card.style.transform = `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
             });
-            
+
             card.addEventListener('mouseleave', () => {
                 card.style.transform = `translateY(0) rotateX(0) rotateY(0)`;
             });
@@ -1275,12 +1431,12 @@
         scanTrigger.addEventListener('click', () => {
             scanTrigger.disabled = true;
             scanTrigger.innerText = 'Initializing...';
-            
+
             setTimeout(() => {
                 scanTrigger.innerText = 'Scanning...';
                 scannerLine.style.display = 'block';
                 scannerLine.style.animation = 'scan 1.5s linear infinite';
-                
+
                 setTimeout(() => {
                     scannerLine.style.display = 'none';
                     demoIdContent.style.display = 'none';
@@ -1323,7 +1479,7 @@
             // Generate a random 6-digit code
             const randomCode = Math.floor(100000 + Math.random() * 900000);
             accessCode.innerText = randomCode;
-            
+
             modalOverlay.style.display = 'flex';
             setTimeout(() => {
                 modalOverlay.classList.add('active');
@@ -1355,17 +1511,17 @@
         simulateBtn.addEventListener('click', () => {
             if (isSimulating) return;
             isSimulating = true;
-            
+
             simulateBtn.innerText = 'Pet Moving...';
             simulateBtn.disabled = true;
 
             // Step 1: Move Pet Inside
             petDot.style.transform = 'translate(-20px, -20px)';
-            
+
             setTimeout(() => {
                 // Step 2: Move Pet Outside
                 petDot.style.transform = 'translate(100px, 60px)';
-                
+
                 setTimeout(() => {
                     // Step 3: Trigger Alert
                     geofence.classList.add('alert');
@@ -1374,7 +1530,7 @@
                     simulateBtn.style.background = '#e74c3c';
                     simulateBtn.style.borderColor = '#e74c3c';
                     simulateBtn.style.color = '#fff';
-                    
+
                     setTimeout(() => {
                         // Reset
                         geofence.classList.remove('alert');
@@ -1389,6 +1545,49 @@
                     }, 4000);
                 }, 2000);
             }, 2000);
+        });
+
+        // AI Scanner Logic
+        const startScanBtn = document.getElementById('start-scan-btn');
+        const scanLaser = document.getElementById('scan-laser');
+        const digitalRecord = document.getElementById('digital-record');
+
+        let isScanning = false;
+
+        startScanBtn.addEventListener('click', () => {
+            if (isScanning) return;
+            isScanning = true;
+            
+            startScanBtn.innerText = 'Analyzing Record...';
+            startScanBtn.disabled = true;
+
+            // Reset state
+            scanLaser.style.top = '100%';
+            digitalRecord.style.clipPath = 'inset(100% 0 0 0)';
+
+            // Scanning Animation
+            let progress = 100;
+            const scanInterval = setInterval(() => {
+                progress -= 1;
+                scanLaser.style.top = progress + '%';
+                digitalRecord.style.clipPath = `inset(${progress}% 0 0 0)`;
+
+                if (progress <= 0) {
+                    clearInterval(scanInterval);
+                    startScanBtn.innerText = 'Extraction Complete';
+                    startScanBtn.style.background = 'transparent';
+                    startScanBtn.style.borderColor = 'var(--accent-green)';
+                    startScanBtn.style.color = 'var(--accent-green)';
+                    
+                    setTimeout(() => {
+                        isScanning = false;
+                        startScanBtn.disabled = false;
+                        startScanBtn.innerText = 'Scan Another Document';
+                        startScanBtn.style.background = 'var(--accent-green)';
+                        startScanBtn.style.color = '#000';
+                    }, 3000);
+                }
+            }, 30);
         });
     </script>
 </body>
