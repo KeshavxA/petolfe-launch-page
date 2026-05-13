@@ -987,6 +987,105 @@
             border-bottom: 1px solid rgba(46, 204, 113, 0.2);
             font-size: 0.9rem;
         }
+
+        /* --- Digital Vault --- */
+        .vault-container {
+            max-width: 600px;
+            margin: 50px auto;
+            height: 400px;
+            perspective: 1000px;
+            position: relative;
+        }
+
+        .vault-door {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+            border: 2px solid var(--accent-green);
+            border-radius: 20px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform-origin: left;
+            transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+
+        .vault-door.open {
+            transform: rotateY(-110deg);
+        }
+
+        .vault-handle {
+            width: 80px;
+            height: 80px;
+            border: 4px solid var(--accent-green);
+            border-radius: 50%;
+            margin-bottom: 20px;
+            position: relative;
+            animation: rotateHandle 10s linear infinite;
+        }
+
+        @keyframes rotateHandle {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .biometric-btn {
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid var(--accent-green);
+            padding: 15px 30px;
+            border-radius: 50px;
+            color: var(--accent-green);
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .biometric-btn:hover {
+            background: var(--accent-green);
+            color: #000;
+        }
+
+        .vault-interior {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 20px;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            box-sizing: border-box;
+            border: 1px solid var(--glass-border);
+        }
+
+        .vault-doc {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .vault-door.open + .vault-interior .vault-doc {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 
@@ -1290,6 +1389,44 @@
         </div>
     </section>
 
+    <section id="vault" class="section">
+        <div class="section-header reveal">
+            <h2>The Encrypted Vault</h2>
+            <p>Your pet's sensitive documents aren't just stored—they're fortified behind biometric security.</p>
+        </div>
+        <div class="vault-container reveal">
+            <!-- Vault Interior (Hidden behind door) -->
+            <div class="vault-interior">
+                <div class="vault-doc" style="transition-delay: 0.4s;">
+                    <i class="fas fa-file-medical" style="font-size: 1.5rem; color: var(--accent-green);"></i>
+                    <span>Medical Logs</span>
+                </div>
+                <div class="vault-doc" style="transition-delay: 0.5s;">
+                    <i class="fas fa-shield-alt" style="font-size: 1.5rem; color: #3498db;"></i>
+                    <span>Insurance Policy</span>
+                </div>
+                <div class="vault-doc" style="transition-delay: 0.6s;">
+                    <i class="fas fa-passport" style="font-size: 1.5rem; color: #f1c40f;"></i>
+                    <span>Travel Passport</span>
+                </div>
+                <div class="vault-doc" style="transition-delay: 0.7s;">
+                    <i class="fas fa-fingerprint" style="font-size: 1.5rem; color: #e74c3c;"></i>
+                    <span>Ownership Deed</span>
+                </div>
+            </div>
+
+            <!-- Vault Door -->
+            <div class="vault-door" id="vault-door">
+                <div class="vault-handle"></div>
+                <button class="biometric-btn" id="unlock-vault-btn">
+                    <i class="fas fa-fingerprint"></i>
+                    AUTHENTICATE ACCESS
+                </button>
+                <p style="color: var(--text-secondary); font-size: 0.7rem; margin-top: 15px; text-transform: uppercase; letter-spacing: 2px;">AES-256 BANKING GRADE</p>
+            </div>
+        </div>
+    </section>
+
     <section id="demo" class="section">
         <div class="section-header reveal">
             <h2>Experience the Future</h2>
@@ -1588,6 +1725,24 @@
                     }, 3000);
                 }
             }, 30);
+        });
+
+        // Digital Vault Logic
+        const unlockBtn = document.getElementById('unlock-vault-btn');
+        const vaultDoor = document.getElementById('vault-door');
+
+        unlockBtn.addEventListener('click', () => {
+            unlockBtn.innerText = 'Scanning...';
+            unlockBtn.style.color = '#fff';
+            
+            setTimeout(() => {
+                unlockBtn.innerText = 'Access Granted';
+                vaultDoor.classList.add('open');
+                
+                setTimeout(() => {
+                    unlockBtn.style.display = 'none';
+                }, 1200);
+            }, 1500);
         });
     </script>
 </body>
