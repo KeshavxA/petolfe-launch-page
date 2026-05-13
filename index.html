@@ -798,6 +798,85 @@
             cursor: pointer;
             font-size: 1.5rem;
         }
+
+        /* --- Safe Zones Widget --- */
+        .safe-zone-widget {
+            max-width: 600px;
+            margin: 50px auto;
+            background: var(--deep-forest);
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-viewport {
+            width: 100%;
+            height: 250px;
+            background: #000;
+            border-radius: 20px;
+            margin: 2rem 0;
+            position: relative;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .geofence-circle {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border: 2px dashed var(--accent-green);
+            border-radius: 50%;
+            background: rgba(46, 204, 113, 0.05);
+            transition: var(--transition);
+        }
+
+        .geofence-circle.alert {
+            border-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+            animation: pulseAlert 1s infinite;
+        }
+
+        @keyframes pulseAlert {
+            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
+            100% { box-shadow: 0 0 0 20px transparent; }
+        }
+
+        .pet-dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+            z-index: 10;
+            box-shadow: 0 0 10px #fff;
+            transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .alert-banner {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #e74c3c;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: none;
+            z-index: 20;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { top: -50px; }
+            to { top: 20px; }
+        }
     </style>
 </head>
 
@@ -1030,6 +1109,33 @@
         </div>
     </section>
 
+    <section id="safezones" class="section">
+        <div class="section-header reveal">
+            <h2>Next-Gen Security</h2>
+            <p>PetOlife identity integrates with IoT hardware for real-time safe-zone monitoring.</p>
+        </div>
+        <div class="safe-zone-widget reveal">
+            <div class="alert-banner" id="alert-banner">⚠️ PET OUTSIDE SAFE ZONE</div>
+            <h4 style="color: var(--accent-green); margin-bottom: 0.5rem;">Geofence Simulator</h4>
+            <p style="color: var(--text-secondary); font-size: 0.85rem;">Toggle the safe-zone and watch how the system reacts to unauthorized movement.</p>
+            
+            <div class="map-viewport">
+                <div class="geofence-circle" id="geofence"></div>
+                <div class="pet-dot" id="pet-dot"></div>
+                
+                <!-- Mock Map Lines -->
+                <svg width="100%" height="100%" opacity="0.1">
+                    <line x1="0" y1="50" x2="100%" y2="50" stroke="white" />
+                    <line x1="0" y1="150" x2="100%" y2="150" stroke="white" />
+                    <line x1="100" y1="0" x2="100" y2="100%" stroke="white" />
+                    <line x1="300" y1="0" x2="300" y2="100%" stroke="white" />
+                </svg>
+            </div>
+            
+            <button class="cta-btn" id="simulate-btn" style="width: 100%;">Start Safety Simulation</button>
+        </div>
+    </section>
+
     <section id="demo" class="section">
         <div class="section-header reveal">
             <h2>Experience the Future</h2>
@@ -1236,6 +1342,53 @@
             if (e.target === modalOverlay) {
                 closeShare.click();
             }
+        });
+
+        // Safe Zone Simulation Logic
+        const simulateBtn = document.getElementById('simulate-btn');
+        const petDot = document.getElementById('pet-dot');
+        const geofence = document.getElementById('geofence');
+        const alertBanner = document.getElementById('alert-banner');
+
+        let isSimulating = false;
+
+        simulateBtn.addEventListener('click', () => {
+            if (isSimulating) return;
+            isSimulating = true;
+            
+            simulateBtn.innerText = 'Pet Moving...';
+            simulateBtn.disabled = true;
+
+            // Step 1: Move Pet Inside
+            petDot.style.transform = 'translate(-20px, -20px)';
+            
+            setTimeout(() => {
+                // Step 2: Move Pet Outside
+                petDot.style.transform = 'translate(100px, 60px)';
+                
+                setTimeout(() => {
+                    // Step 3: Trigger Alert
+                    geofence.classList.add('alert');
+                    alertBanner.style.display = 'block';
+                    simulateBtn.innerText = 'Alert Triggered';
+                    simulateBtn.style.background = '#e74c3c';
+                    simulateBtn.style.borderColor = '#e74c3c';
+                    simulateBtn.style.color = '#fff';
+                    
+                    setTimeout(() => {
+                        // Reset
+                        geofence.classList.remove('alert');
+                        alertBanner.style.display = 'none';
+                        petDot.style.transform = 'translate(0, 0)';
+                        simulateBtn.innerText = 'Reset Simulation';
+                        simulateBtn.disabled = false;
+                        simulateBtn.style.background = 'var(--accent-green)';
+                        simulateBtn.style.borderColor = 'var(--accent-green)';
+                        simulateBtn.style.color = '#000';
+                        isSimulating = false;
+                    }, 4000);
+                }, 2000);
+            }, 2000);
         });
     </script>
 </body>
