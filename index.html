@@ -1458,6 +1458,121 @@
             display: none;
             animation: popIn 0.5s ease;
         }
+        /* --- Smart Collar NFC Showcase --- */
+        .nfc-showcase-container {
+            max-width: 800px;
+            margin: 50px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            padding: 3rem;
+            background: radial-gradient(circle at center, rgba(46, 204, 113, 0.05) 0%, transparent 70%);
+            position: relative;
+        }
+
+        .smart-collar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #111, #222);
+            border-radius: 50%;
+            border: 4px solid #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 2px 10px rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .smart-collar::after {
+            content: 'NFC';
+            color: var(--accent-green);
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+
+        .nfc-ripple {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid var(--accent-green);
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .smart-collar.active .nfc-ripple {
+            animation: nfcPulseAnim 1.5s ease-out;
+        }
+
+        @keyframes nfcPulseAnim {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        .mock-smartphone {
+            width: 200px;
+            height: 400px;
+            background: #000;
+            border: 8px solid #222;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+            transform: translateX(100px) rotate(10deg);
+            opacity: 0.5;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: -20px 20px 40px rgba(0,0,0,0.5);
+            z-index: 3;
+        }
+
+        .mock-smartphone.tap {
+            transform: translateX(-20px) rotate(0deg);
+            opacity: 1;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+
+        .phone-screen.scanned {
+            background: var(--deep-forest);
+        }
+
+        .phone-ui-content {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            transition-delay: 0.3s;
+        }
+
+        .phone-screen.scanned .phone-ui-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .nfc-showcase-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            .mock-smartphone {
+                transform: translateY(50px) rotate(5deg);
+            }
+            .mock-smartphone.tap {
+                transform: translateY(-20px) rotate(0deg);
+            }
+        }
     </style>
 </head>
 
@@ -1860,6 +1975,41 @@
                     <span style="color: var(--text-secondary);">Follow-up:</span> <span style="color: #fff;">14 days</span>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section id="smart-collar-demo" class="section">
+        <div class="section-header reveal">
+            <h2>Hardware Meets Software</h2>
+            <p>A single tap of our NFC Smart Collar instantly pulls up the pet's entire digital identity.</p>
+        </div>
+        
+        <div class="nfc-showcase-container reveal">
+            <!-- The Collar -->
+            <div class="smart-collar" id="smart-collar-tag">
+                <div class="nfc-ripple"></div>
+            </div>
+
+            <!-- The Phone -->
+            <div class="mock-smartphone" id="mock-smartphone">
+                <div class="phone-screen" id="phone-screen">
+                    <div id="phone-standby" style="color: var(--text-secondary); font-size: 0.8rem;">Ready to scan...</div>
+                    <div class="phone-ui-content" id="phone-ui-content">
+                        <div style="width: 60px; height: 60px; background: #fff; border-radius: 50%; margin: 0 auto 15px;"></div>
+                        <h4 style="color: var(--accent-green); margin-bottom: 5px;">Buddy</h4>
+                        <p style="font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 15px;">Verified Profile ✓</p>
+                        <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; font-size: 0.7rem; text-align: left;">
+                            <p style="color: #fff; margin-bottom: 5px;">Owner: Jane Doe</p>
+                            <p style="color: #fff; margin-bottom: 5px;">Phone: 555-0198</p>
+                            <a href="#" style="color: var(--accent-green); text-decoration: none; font-weight: bold;">View Medical Records &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center;" class="reveal">
+            <button class="cta-btn" id="trigger-nfc-tap">Simulate NFC Tap</button>
         </div>
     </section>
 
@@ -2398,6 +2548,54 @@
                     }, 800);
                 }
             }, 50); // Speed of typing
+        });
+        // NFC Smart Collar Logic
+        const triggerNfcTap = document.getElementById('trigger-nfc-tap');
+        const mockSmartphone = document.getElementById('mock-smartphone');
+        const smartCollarTag = document.getElementById('smart-collar-tag');
+        const phoneScreen = document.getElementById('phone-screen');
+        const phoneStandby = document.getElementById('phone-standby');
+        
+        let isNfcSimulating = false;
+
+        triggerNfcTap.addEventListener('click', () => {
+            if (isNfcSimulating) return;
+            isNfcSimulating = true;
+            
+            triggerNfcTap.innerText = 'Scanning...';
+            triggerNfcTap.disabled = true;
+
+            // 1. Phone moves in
+            mockSmartphone.classList.add('tap');
+            
+            // 2. Collar pulses after a short delay
+            setTimeout(() => {
+                smartCollarTag.classList.add('active');
+                
+                // 3. Screen updates
+                setTimeout(() => {
+                    phoneStandby.style.display = 'none';
+                    phoneScreen.classList.add('scanned');
+                    triggerNfcTap.innerText = 'Profile Loaded';
+                    triggerNfcTap.style.background = 'transparent';
+                    triggerNfcTap.style.color = 'var(--accent-green)';
+                    
+                    // Reset Simulation
+                    setTimeout(() => {
+                        mockSmartphone.classList.remove('tap');
+                        smartCollarTag.classList.remove('active');
+                        phoneScreen.classList.remove('scanned');
+                        phoneStandby.style.display = 'block';
+                        
+                        triggerNfcTap.innerText = 'Simulate NFC Tap';
+                        triggerNfcTap.disabled = false;
+                        triggerNfcTap.style.background = 'var(--accent-green)';
+                        triggerNfcTap.style.color = '#000';
+                        isNfcSimulating = false;
+                    }, 4000);
+                    
+                }, 500);
+            }, 800);
         });
     </script>
 </body>
