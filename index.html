@@ -1086,6 +1086,174 @@
             opacity: 1;
             transform: translateY(0);
         }
+        /* --- Pet-GPT Chat Widget --- */
+        .chat-widget-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.4);
+            cursor: pointer;
+            z-index: 9999;
+            transition: var(--transition);
+        }
+
+        .chat-widget-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-window {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 450px;
+            background: var(--deep-forest);
+            border: 1px solid var(--accent-green);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            z-index: 9998;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+
+        .chat-window.open {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0);
+        }
+
+        .chat-header {
+            background: rgba(46, 204, 113, 0.1);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-header .ai-avatar {
+            width: 30px;
+            height: 30px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .msg-bubble {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .msg-ai {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .msg-user {
+            background: var(--accent-green);
+            color: #000;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .chat-input-area {
+            padding: 15px;
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input-area input {
+            flex-grow: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            padding: 10px 15px;
+            border-radius: 50px;
+            color: #fff;
+            outline: none;
+            font-size: 0.85rem;
+        }
+
+        .chat-input-area input:focus {
+            border-color: var(--accent-green);
+        }
+
+        .chat-input-area button {
+            background: var(--accent-green);
+            color: #000;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .chat-input-area button:hover {
+            transform: scale(1.1);
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 4px;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border-bottom-left-radius: 2px;
+            width: fit-content;
+            align-self: flex-start;
+        }
+
+        .typing-indicator span {
+            width: 6px;
+            height: 6px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+            animation: typingBounce 1s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
     </style>
 </head>
 
@@ -1500,6 +1668,43 @@
         </div>
     </footer>
 
+    <!-- Pet-GPT Chat Widget -->
+    <div class="chat-widget-btn" id="chat-toggle-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10z"></path>
+        </svg>
+    </div>
+
+    <div class="chat-window" id="chat-window">
+        <div class="chat-header">
+            <div class="ai-avatar">AI</div>
+            <div>
+                <h4 style="color: #fff; font-size: 0.9rem;">Pet-GPT Assistant</h4>
+                <p style="font-size: 0.7rem; color: var(--accent-green);">Connected to Buddy's Vault</p>
+            </div>
+            <span id="close-chat" style="margin-left: auto; cursor: pointer; color: var(--text-secondary); font-size: 1.5rem;">&times;</span>
+        </div>
+        
+        <div class="chat-messages" id="chat-messages">
+            <div class="msg-bubble msg-ai">
+                Hi! I'm Buddy's AI health assistant. I can read his medical records. What would you like to know?
+            </div>
+            <div class="typing-indicator" id="chat-typing">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="e.g. When is his rabies shot due?" autocomplete="off">
+            <button id="send-chat-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </div>
+    </div>
+
     <script>
 
         const observerOptions = {
@@ -1743,6 +1948,71 @@
                     unlockBtn.style.display = 'none';
                 }, 1200);
             }, 1500);
+        });
+
+        // Pet-GPT Chat Logic
+        const chatToggleBtn = document.getElementById('chat-toggle-btn');
+        const chatWindow = document.getElementById('chat-window');
+        const closeChat = document.getElementById('close-chat');
+        const chatInput = document.getElementById('chat-input');
+        const sendChatBtn = document.getElementById('send-chat-btn');
+        const chatMessages = document.getElementById('chat-messages');
+        const typingIndicator = document.getElementById('chat-typing');
+
+        chatToggleBtn.addEventListener('click', () => {
+            chatWindow.classList.add('open');
+            chatInput.focus();
+        });
+
+        closeChat.addEventListener('click', () => {
+            chatWindow.classList.remove('open');
+        });
+
+        function appendMessage(text, isUser = false) {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('msg-bubble');
+            msgDiv.classList.add(isUser ? 'msg-user' : 'msg-ai');
+            msgDiv.innerText = text;
+            
+            // Insert before typing indicator
+            chatMessages.insertBefore(msgDiv, typingIndicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function handleSend() {
+            const query = chatInput.value.trim();
+            if (!query) return;
+
+            // Add user message
+            appendMessage(query, true);
+            chatInput.value = '';
+
+            // Show typing
+            typingIndicator.style.display = 'flex';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Simulate AI delay and response
+            setTimeout(() => {
+                typingIndicator.style.display = 'none';
+                
+                let response = "I've checked Buddy's vault. ";
+                const lowerQuery = query.toLowerCase();
+                
+                if (lowerQuery.includes('rabies') || lowerQuery.includes('shot') || lowerQuery.includes('vaccine')) {
+                    response += "Buddy's last Rabies shot was April 12, 2022. He is due for a booster in Spring 2025.";
+                } else if (lowerQuery.includes('weight') || lowerQuery.includes('heavy')) {
+                    response += "At his last vet visit, Buddy weighed 32.50 kg. He's maintaining a healthy weight!";
+                } else {
+                    response += "I found his records, but I'm not sure about that specific question. Would you like me to share his full health timeline with your vet?";
+                }
+
+                appendMessage(response, false);
+            }, 1500);
+        }
+
+        sendChatBtn.addEventListener('click', handleSend);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSend();
         });
     </script>
 </body>
