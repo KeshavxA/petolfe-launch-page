@@ -1341,6 +1341,123 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.5);
             animation: popIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        /* --- Vet Dictation --- */
+        .dictation-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: var(--glass);
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            padding: 2.5rem;
+            position: relative;
+            text-align: center;
+        }
+
+        .mic-button {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--accent-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .mic-button svg {
+            color: var(--accent-green);
+            width: 32px;
+            height: 32px;
+            transition: var(--transition);
+        }
+
+        .mic-button.recording {
+            background: rgba(231, 76, 60, 0.1);
+            border-color: #e74c3c;
+            animation: micPulse 1.5s infinite;
+        }
+
+        .mic-button.recording svg {
+            color: #e74c3c;
+        }
+
+        @keyframes micPulse {
+            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
+            100% { box-shadow: 0 0 0 30px transparent; }
+        }
+
+        .audio-visualizer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            height: 40px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .audio-visualizer.active {
+            opacity: 1;
+        }
+
+        .audio-bar {
+            width: 4px;
+            height: 10px;
+            background: var(--accent-green);
+            border-radius: 2px;
+            animation: bounceBar 0.5s infinite ease-in-out alternate;
+        }
+
+        .audio-bar:nth-child(2) { animation-delay: 0.1s; }
+        .audio-bar:nth-child(3) { animation-delay: 0.2s; height: 20px; }
+        .audio-bar:nth-child(4) { animation-delay: 0.3s; height: 30px; }
+        .audio-bar:nth-child(5) { animation-delay: 0.4s; height: 20px; }
+        .audio-bar:nth-child(6) { animation-delay: 0.5s; }
+        .audio-bar:nth-child(7) { animation-delay: 0.6s; }
+
+        @keyframes bounceBar {
+            0% { transform: scaleY(1); }
+            100% { transform: scaleY(3); }
+        }
+
+        .transcript-box {
+            background: #000;
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            min-height: 120px;
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--text-secondary);
+            position: relative;
+        }
+
+        .transcript-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background: var(--accent-green);
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            margin-left: 5px;
+            display: none;
+        }
+
+        .structured-log-preview {
+            margin-top: 20px;
+            background: rgba(46, 204, 113, 0.05);
+            border: 1px solid rgba(46, 204, 113, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: left;
+            display: none;
+            animation: popIn 0.5s ease;
+        }
     </style>
 </head>
 
@@ -1706,6 +1823,43 @@
             </div>
 
             <button class="cta-btn" id="start-face-scan" style="width: 100%; background: #3498db; border-color: #3498db; color: #fff;">Initialize AI Scan</button>
+        </div>
+    </section>
+
+    <section id="vet-dictation" class="section">
+        <div class="section-header reveal">
+            <h2>Voice-to-Vault AI</h2>
+            <p>Veterinarians save hours of data entry. Speak naturally, and our AI structures the medical log instantly.</p>
+        </div>
+        <div class="dictation-container reveal">
+            <div class="mic-button" id="dictate-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                    <line x1="12" y1="19" x2="12" y2="23"></line>
+                    <line x1="8" y1="23" x2="16" y2="23"></line>
+                </svg>
+            </div>
+            
+            <div class="audio-visualizer" id="audio-visualizer">
+                <div class="audio-bar"></div><div class="audio-bar"></div><div class="audio-bar"></div>
+                <div class="audio-bar"></div><div class="audio-bar"></div><div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+            </div>
+
+            <div class="transcript-box" id="transcript-box">
+                <span id="transcript-text" style="color: #fff;"></span><span class="transcript-cursor" id="transcript-cursor"></span>
+                <p style="color: rgba(255,255,255,0.2); margin-top: 10px;" id="transcript-placeholder">Click microphone to start dictation simulation...</p>
+            </div>
+
+            <div class="structured-log-preview" id="structured-log">
+                <p style="color: var(--accent-green); font-size: 0.8rem; font-weight: bold; margin-bottom: 10px; text-transform: uppercase;">✓ Log Structured & Saved</p>
+                <div style="display: grid; grid-template-columns: 100px 1fr; gap: 5px; font-size: 0.9rem;">
+                    <span style="color: var(--text-secondary);">Diagnosis:</span> <span style="color: #fff;">Mild ear irritation (Left)</span>
+                    <span style="color: var(--text-secondary);">Treatment:</span> <span style="color: #fff;">Otomax drops prescribed</span>
+                    <span style="color: var(--text-secondary);">Follow-up:</span> <span style="color: #fff;">14 days</span>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -2189,6 +2343,61 @@
                 }, 4000);
                 
             }, 3000);
+        });
+        // Voice-to-Vault Logic
+        const dictateBtn = document.getElementById('dictate-btn');
+        const visualizer = document.getElementById('audio-visualizer');
+        const transcriptBox = document.getElementById('transcript-box');
+        const transcriptText = document.getElementById('transcript-text');
+        const transcriptCursor = document.getElementById('transcript-cursor');
+        const transcriptPlaceholder = document.getElementById('transcript-placeholder');
+        const structuredLog = document.getElementById('structured-log');
+
+        let isDictating = false;
+        const simulationText = "Patient Buddy presents with mild ear irritation in the left ear. Prescribing Otomax drops twice daily. Schedule follow-up in 14 days.";
+
+        dictateBtn.addEventListener('click', () => {
+            if (isDictating) return;
+            isDictating = true;
+
+            // Reset UI
+            structuredLog.style.display = 'none';
+            transcriptText.innerText = '';
+            transcriptPlaceholder.style.display = 'none';
+            transcriptCursor.style.display = 'inline-block';
+            
+            // Start recording state
+            dictateBtn.classList.add('recording');
+            visualizer.classList.add('active');
+
+            // Typewriter effect
+            let i = 0;
+            const typeWriter = setInterval(() => {
+                transcriptText.innerText += simulationText.charAt(i);
+                i++;
+                if (i >= simulationText.length) {
+                    clearInterval(typeWriter);
+                    
+                    // Stop recording state
+                    dictateBtn.classList.remove('recording');
+                    visualizer.classList.remove('active');
+                    transcriptCursor.style.display = 'none';
+                    
+                    // Show structured log after brief delay
+                    setTimeout(() => {
+                        structuredLog.style.display = 'block';
+                        
+                        setTimeout(() => {
+                            isDictating = false;
+                            transcriptPlaceholder.style.display = 'block';
+                            transcriptPlaceholder.innerText = "Click microphone to run another simulation...";
+                            transcriptText.innerText = "";
+                            structuredLog.style.display = 'none';
+                        }, 5000);
+                        
+                    }, 800);
+                }
+            }, 50); // Speed of typing
         });
     </script>
 </body>
