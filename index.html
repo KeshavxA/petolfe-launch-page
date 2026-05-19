@@ -1254,6 +1254,93 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-4px); }
         }
+        /* --- Facial Recognition --- */
+        .face-scan-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: var(--glass);
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            padding: 2.5rem;
+            position: relative;
+            text-align: center;
+        }
+
+        .face-viewport {
+            width: 100%;
+            height: 350px;
+            background: #111;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dog-face-mock {
+            font-size: 5rem;
+            opacity: 0.5;
+            transition: var(--transition);
+        }
+
+        .scanning-reticle {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 2px solid var(--accent-green);
+            border-radius: 20px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .scanning-reticle::before, .scanning-reticle::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-color: var(--accent-green);
+            border-style: solid;
+        }
+
+        .scanning-reticle::before {
+            top: -2px; left: -2px;
+            border-width: 4px 0 0 4px;
+        }
+
+        .scanning-reticle::after {
+            bottom: -2px; right: -2px;
+            border-width: 0 4px 4px 0;
+        }
+
+        .face-scan-laser {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-green);
+            box-shadow: 0 0 15px var(--accent-green);
+            display: none;
+            z-index: 10;
+        }
+
+        .match-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(46, 204, 113, 0.9);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            display: none;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            animation: popIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
     </style>
 </head>
 
@@ -1592,6 +1679,33 @@
                 </button>
                 <p style="color: var(--text-secondary); font-size: 0.7rem; margin-top: 15px; text-transform: uppercase; letter-spacing: 2px;">AES-256 BANKING GRADE</p>
             </div>
+        </div>
+    </section>
+
+    <section id="facial-recognition" class="section">
+        <div class="section-header reveal">
+            <h2>AI Facial Recognition</h2>
+            <p>Lost collars? No problem. Our AI matches found pets to their digital identity using advanced computer vision.</p>
+        </div>
+        <div class="face-scan-container reveal">
+            <h4 style="color: #3498db; margin-bottom: 0.5rem;">"Found Pet" Scanner Demo</h4>
+            <p style="color: var(--text-secondary); font-size: 0.85rem;">Simulate scanning a found dog's face to check the global registry.</p>
+            
+            <div class="face-viewport">
+                <!-- Mock "Camera" View -->
+                <div class="dog-face-mock" id="dog-face">🐕</div>
+                
+                <!-- Scanning UI -->
+                <div class="scanning-reticle" id="scanning-reticle"></div>
+                <div class="face-scan-laser" id="face-scan-laser"></div>
+                
+                <!-- Result -->
+                <div class="match-overlay" id="match-overlay">
+                    ✓ MATCH FOUND: BUDDY (99.8%)
+                </div>
+            </div>
+
+            <button class="cta-btn" id="start-face-scan" style="width: 100%; background: #3498db; border-color: #3498db; color: #fff;">Initialize AI Scan</button>
         </div>
     </section>
 
@@ -2013,6 +2127,68 @@
         sendChatBtn.addEventListener('click', handleSend);
         chatInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') handleSend();
+        });
+        // Facial Recognition Logic
+        const startFaceScanBtn = document.getElementById('start-face-scan');
+        const faceScanLaser = document.getElementById('face-scan-laser');
+        const scanningReticle = document.getElementById('scanning-reticle');
+        const matchOverlay = document.getElementById('match-overlay');
+        const dogFace = document.getElementById('dog-face');
+
+        let isFaceScanning = false;
+
+        startFaceScanBtn.addEventListener('click', () => {
+            if (isFaceScanning) return;
+            isFaceScanning = true;
+            
+            startFaceScanBtn.innerText = 'Analyzing Biometrics...';
+            startFaceScanBtn.disabled = true;
+
+            // Reset UI
+            matchOverlay.style.display = 'none';
+            dogFace.style.opacity = '1';
+            
+            // Show Reticle
+            scanningReticle.style.opacity = '1';
+            
+            // Start Laser
+            faceScanLaser.style.display = 'block';
+            let pos = 0;
+            let direction = 1;
+            
+            const scanAnim = setInterval(() => {
+                pos += 5 * direction;
+                if (pos > 350) direction = -1;
+                if (pos < 0) direction = 1;
+                faceScanLaser.style.top = pos + 'px';
+            }, 20);
+
+            // Finish Scan
+            setTimeout(() => {
+                clearInterval(scanAnim);
+                faceScanLaser.style.display = 'none';
+                scanningReticle.style.borderColor = 'var(--accent-green)';
+                
+                matchOverlay.style.display = 'block';
+                startFaceScanBtn.innerText = 'Profile Retrieved';
+                startFaceScanBtn.style.background = 'var(--accent-green)';
+                startFaceScanBtn.style.borderColor = 'var(--accent-green)';
+                startFaceScanBtn.style.color = '#000';
+                
+                setTimeout(() => {
+                    // Reset everything
+                    isFaceScanning = false;
+                    scanningReticle.style.opacity = '0';
+                    matchOverlay.style.display = 'none';
+                    dogFace.style.opacity = '0.5';
+                    startFaceScanBtn.innerText = 'Initialize AI Scan';
+                    startFaceScanBtn.disabled = false;
+                    startFaceScanBtn.style.background = '#3498db';
+                    startFaceScanBtn.style.borderColor = '#3498db';
+                    startFaceScanBtn.style.color = '#fff';
+                }, 4000);
+                
+            }, 3000);
         });
     </script>
 </body>
