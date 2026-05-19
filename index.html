@@ -1704,6 +1704,14 @@
                         registry.</p>
                 </div>
             </div>
+
+            <div class="timeline-item reveal predictive-alert" id="ai-predictive-timeline" style="display: none;">
+                <div class="timeline-dot" style="background: var(--accent-green); box-shadow: 0 0 10px var(--accent-green);"></div>
+                <div class="timeline-content" style="border: 1px solid var(--accent-green); background: rgba(46, 204, 113, 0.05);">
+                    <h4 style="color: var(--accent-green);">✦ AI Predictive Insight</h4>
+                    <p id="predictive-text">Based on breed data, schedule joint screenings by age 5.</p>
+                </div>
+            </div>
             <div class="timeline-item reveal" style="transition-delay: 0.1s;">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
@@ -2221,8 +2229,30 @@
             cardName.innerText = e.target.value.toUpperCase() || 'BUDDY';
         });
 
+        const aiPredictiveTimeline = document.getElementById('ai-predictive-timeline');
+        const predictiveText = document.getElementById('predictive-text');
+
         inputBreed.addEventListener('input', (e) => {
-            cardBreed.innerText = e.target.value.toUpperCase() || 'GOLDEN RETRIEVER';
+            const breedVal = e.target.value.toUpperCase();
+            cardBreed.innerText = breedVal || 'GOLDEN RETRIEVER';
+
+            // AI Predictive Health Logic
+            const lowerBreed = breedVal.toLowerCase();
+            if (lowerBreed.includes('golden') || lowerBreed.includes('retriever')) {
+                aiPredictiveTimeline.style.display = 'block';
+                predictiveText.innerText = 'Golden Retriever detected: Recommend scheduling preventative joint/hip dysplasia screenings by age 4.';
+            } else if (lowerBreed.includes('pug') || lowerBreed.includes('bulldog') || lowerBreed.includes('french')) {
+                aiPredictiveTimeline.style.display = 'block';
+                predictiveText.innerText = 'Brachycephalic breed detected: Monitor for respiratory distress. Avoid extreme heat and strenuous exercise.';
+            } else if (lowerBreed.includes('shepherd')) {
+                aiPredictiveTimeline.style.display = 'block';
+                predictiveText.innerText = 'German Shepherd detected: High risk for Degenerative Myelopathy. Schedule regular neurological exams.';
+            } else if (lowerBreed.includes('cat') || lowerBreed.includes('feline')) {
+                aiPredictiveTimeline.style.display = 'block';
+                predictiveText.innerText = 'Feline profile: Ensure annual CKD (Chronic Kidney Disease) blood screenings starting at age 7.';
+            } else {
+                aiPredictiveTimeline.style.display = 'none';
+            }
         });
 
         inputChip.addEventListener('input', (e) => {
