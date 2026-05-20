@@ -1931,6 +1931,142 @@
         .score-btn:hover {
             background: rgba(255,255,255,0.1);
         }
+        /* --- Live Vitals Telemetry Dashboard --- */
+        .vitals-dashboard {
+            max-width: 900px;
+            margin: 50px auto;
+            background: linear-gradient(180deg, rgba(11, 26, 20, 0.9), #000);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 2.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vitals-dashboard::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+            animation: scanline 3s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .vital-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .vital-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .vital-title {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .vital-icon {
+            font-size: 1.2rem;
+            color: var(--accent-green);
+        }
+
+        .vital-value-container {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+        }
+
+        .vital-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .vital-unit {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* EKG Waveform Animation */
+        .ekg-container {
+            width: 100%;
+            height: 60px;
+            position: relative;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .ekg-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 200%;
+            height: 2px;
+            background: transparent;
+            box-shadow: 
+                10px 0 0 var(--accent-green),
+                20px -20px 0 var(--accent-green),
+                30px 20px 0 var(--accent-green),
+                40px -10px 0 var(--accent-green),
+                50px 0 0 var(--accent-green),
+                200px 0 0 var(--accent-green);
+            animation: ekgMove 1.5s linear infinite;
+        }
+
+        @keyframes ekgMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-150px); }
+        }
+
+        /* Temp Waveform */
+        .temp-wave {
+            width: 100%;
+            height: 40px;
+            margin-top: 20px;
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+        }
+
+        .temp-bar {
+            flex: 1;
+            background: #e74c3c;
+            border-radius: 2px 2px 0 0;
+            transition: height 0.3s ease;
+        }
+        
+        .pulse-red {
+            color: #e74c3c;
+            animation: pulseText 1s infinite alternate;
+        }
+
+        @keyframes pulseText {
+            from { opacity: 0.6; text-shadow: 0 0 5px rgba(231,76,60,0.5); }
+            to { opacity: 1; text-shadow: 0 0 15px rgba(231,76,60,1); }
+        }
     </style>
 </head>
 
@@ -2519,6 +2655,61 @@
 
         <div style="text-align: center;" class="reveal">
             <button class="cta-btn" id="trigger-nfc-tap">Simulate NFC Tap</button>
+        </div>
+    </section>
+
+    <section id="live-vitals" class="section">
+        <div class="section-header reveal">
+            <h2>Live Vitals Telemetry</h2>
+            <p>Syncs directly with PetOlife Smart Collars to stream real-time biometric data. Predictive AI catches illness before symptoms show.</p>
+        </div>
+        
+        <div class="vitals-dashboard reveal">
+            <!-- Heart Rate -->
+            <div class="vital-card">
+                <div class="vital-header">
+                    <span class="vital-title">Heart Rate</span>
+                    <span class="vital-icon pulse-red">❤</span>
+                </div>
+                <div class="vital-value-container">
+                    <span class="vital-value" id="bpm-val">88</span>
+                    <span class="vital-unit">BPM</span>
+                </div>
+                <div class="ekg-container">
+                    <div class="ekg-line"></div>
+                </div>
+            </div>
+
+            <!-- Body Temperature -->
+            <div class="vital-card">
+                <div class="vital-header">
+                    <span class="vital-title">Core Temp</span>
+                    <span class="vital-icon" style="color: #e74c3c;">🌡</span>
+                </div>
+                <div class="vital-value-container">
+                    <span class="vital-value" id="temp-val">101.5</span>
+                    <span class="vital-unit">°F</span>
+                </div>
+                <div class="temp-wave" id="temp-wave">
+                    <!-- Bars injected by JS -->
+                </div>
+            </div>
+
+            <!-- Activity Level -->
+            <div class="vital-card">
+                <div class="vital-header">
+                    <span class="vital-title">Activity Status</span>
+                    <span class="vital-icon" style="color: #3498db;">⚡</span>
+                </div>
+                <div class="vital-value-container">
+                    <span class="vital-value" id="activity-val" style="font-size: 1.8rem; color: #3498db;">MODERATE</span>
+                </div>
+                <p style="color: var(--text-secondary); font-size: 0.75rem; margin-top: 10px;">Caloric Burn: <span style="color: #fff;" id="cal-val">420</span> kcal today</p>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 15px;" class="reveal">
+            <span style="font-size: 0.7rem; color: var(--accent-green); letter-spacing: 2px;">● LIVE STREAMING ACTIVE</span>
         </div>
     </section>
 
@@ -3307,6 +3498,62 @@
         // Initialize default styling for dial
         document.getElementById('dial-progress').style.stroke = '#3498db';
         document.getElementById('dial-progress').style.filter = 'drop-shadow(0 0 10px #3498db)';
+        // Live Vitals Telemetry Logic
+        const bpmVal = document.getElementById('bpm-val');
+        const tempVal = document.getElementById('temp-val');
+        const activityVal = document.getElementById('activity-val');
+        const calVal = document.getElementById('cal-val');
+        const tempWave = document.getElementById('temp-wave');
+
+        // Initialize temp bars
+        for(let i=0; i<15; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'temp-bar';
+            bar.style.height = '50%';
+            tempWave.appendChild(bar);
+        }
+        const tempBars = document.querySelectorAll('.temp-bar');
+
+        setInterval(() => {
+            // Simulate BPM (85 - 95)
+            const newBpm = Math.floor(Math.random() * (95 - 85 + 1) + 85);
+            bpmVal.innerText = newBpm;
+
+            // Simulate Temp (101.2 - 101.8)
+            const newTemp = (Math.random() * (101.8 - 101.2) + 101.2).toFixed(1);
+            tempVal.innerText = newTemp;
+
+            // Update Temp Bars
+            tempBars.forEach(bar => {
+                const randomHeight = Math.floor(Math.random() * 80 + 20); // 20% to 100%
+                bar.style.height = `${randomHeight}%`;
+                // Color shift based on temp
+                if(newTemp > 101.6) {
+                    bar.style.background = '#e74c3c'; // Red
+                } else {
+                    bar.style.background = 'var(--accent-green)'; // Green
+                }
+            });
+
+            // Simulate Activity state shift randomly
+            const randActivity = Math.random();
+            if(randActivity > 0.9) {
+                activityVal.innerText = 'RESTING';
+                activityVal.style.color = 'var(--text-secondary)';
+            } else if (randActivity > 0.6) {
+                activityVal.innerText = 'ACTIVE';
+                activityVal.style.color = '#e67e22';
+            } else {
+                activityVal.innerText = 'MODERATE';
+                activityVal.style.color = '#3498db';
+            }
+
+            // Increment calories slowly
+            if(Math.random() > 0.5) {
+                calVal.innerText = parseInt(calVal.innerText) + 1;
+            }
+
+        }, 2000); // Update every 2 seconds
     </script>
 </body>
 
