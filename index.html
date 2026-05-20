@@ -945,7 +945,8 @@
             margin: 2rem 0;
         }
 
-        .paper-record, .digital-record {
+        .paper-record,
+        .digital-record {
             position: absolute;
             top: 0;
             left: 0;
@@ -965,8 +966,10 @@
         .digital-record {
             background: var(--deep-forest);
             color: var(--accent-green);
-            clip-path: inset(100% 0 0 0); /* Hidden initially */
-            transition: none; /* Controlled by JS laser */
+            clip-path: inset(100% 0 0 0);
+            /* Hidden initially */
+            transition: none;
+            /* Controlled by JS laser */
         }
 
         .scan-laser {
@@ -1011,7 +1014,7 @@
             justify-content: center;
             transform-origin: left;
             transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
         }
 
         .vault-door.open {
@@ -1029,8 +1032,13 @@
         }
 
         @keyframes rotateHandle {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .biometric-btn {
@@ -1082,10 +1090,11 @@
             transition: all 0.5s ease;
         }
 
-        .vault-door.open + .vault-interior .vault-doc {
+        .vault-door.open+.vault-interior .vault-doc {
             opacity: 1;
             transform: translateY(0);
         }
+
         /* --- Pet-GPT Chat Widget --- */
         .chat-widget-btn {
             position: fixed;
@@ -1117,7 +1126,7 @@
             background: var(--deep-forest);
             border: 1px solid var(--accent-green);
             border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
             z-index: 9998;
             display: flex;
             flex-direction: column;
@@ -1247,13 +1256,26 @@
             animation: typingBounce 1s infinite;
         }
 
-        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
 
         @keyframes typingBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-4px);
+            }
         }
+
         /* --- Facial Recognition --- */
         .face-scan-container {
             max-width: 600px;
@@ -1296,7 +1318,8 @@
             transition: all 0.3s ease;
         }
 
-        .scanning-reticle::before, .scanning-reticle::after {
+        .scanning-reticle::before,
+        .scanning-reticle::after {
             content: '';
             position: absolute;
             width: 30px;
@@ -1306,12 +1329,14 @@
         }
 
         .scanning-reticle::before {
-            top: -2px; left: -2px;
+            top: -2px;
+            left: -2px;
             border-width: 4px 0 0 4px;
         }
 
         .scanning-reticle::after {
-            bottom: -2px; right: -2px;
+            bottom: -2px;
+            right: -2px;
             border-width: 0 4px 4px 0;
         }
 
@@ -1338,9 +1363,10 @@
             border-radius: 50px;
             font-weight: 700;
             display: none;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
             animation: popIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         /* --- Vet Dictation --- */
         .dictation-container {
             max-width: 600px;
@@ -1386,8 +1412,13 @@
         }
 
         @keyframes micPulse {
-            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
-            100% { box-shadow: 0 0 0 30px transparent; }
+            0% {
+                box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4);
+            }
+
+            100% {
+                box-shadow: 0 0 0 30px transparent;
+            }
         }
 
         .audio-visualizer {
@@ -1413,16 +1444,41 @@
             animation: bounceBar 0.5s infinite ease-in-out alternate;
         }
 
-        .audio-bar:nth-child(2) { animation-delay: 0.1s; }
-        .audio-bar:nth-child(3) { animation-delay: 0.2s; height: 20px; }
-        .audio-bar:nth-child(4) { animation-delay: 0.3s; height: 30px; }
-        .audio-bar:nth-child(5) { animation-delay: 0.4s; height: 20px; }
-        .audio-bar:nth-child(6) { animation-delay: 0.5s; }
-        .audio-bar:nth-child(7) { animation-delay: 0.6s; }
+        .audio-bar:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .audio-bar:nth-child(3) {
+            animation-delay: 0.2s;
+            height: 20px;
+        }
+
+        .audio-bar:nth-child(4) {
+            animation-delay: 0.3s;
+            height: 30px;
+        }
+
+        .audio-bar:nth-child(5) {
+            animation-delay: 0.4s;
+            height: 20px;
+        }
+
+        .audio-bar:nth-child(6) {
+            animation-delay: 0.5s;
+        }
+
+        .audio-bar:nth-child(7) {
+            animation-delay: 0.6s;
+        }
 
         @keyframes bounceBar {
-            0% { transform: scaleY(1); }
-            100% { transform: scaleY(3); }
+            0% {
+                transform: scaleY(1);
+            }
+
+            100% {
+                transform: scaleY(3);
+            }
         }
 
         .transcript-box {
@@ -1458,6 +1514,7 @@
             display: none;
             animation: popIn 0.5s ease;
         }
+
         /* --- Smart Collar NFC Showcase --- */
         .nfc-showcase-container {
             max-width: 800px;
@@ -1477,7 +1534,7 @@
             background: linear-gradient(135deg, #111, #222);
             border-radius: 50%;
             border: 4px solid #333;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 2px 10px rgba(255,255,255,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 2px 10px rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1508,8 +1565,15 @@
         }
 
         @keyframes nfcPulseAnim {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(3); opacity: 0; }
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
         }
 
         .mock-smartphone {
@@ -1523,7 +1587,7 @@
             transform: translateX(100px) rotate(10deg);
             opacity: 0.5;
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: -20px 20px 40px rgba(0,0,0,0.5);
+            box-shadow: -20px 20px 40px rgba(0, 0, 0, 0.5);
             z-index: 3;
         }
 
@@ -1566,12 +1630,126 @@
                 flex-direction: column;
                 padding: 1rem;
             }
+
             .mock-smartphone {
                 transform: translateY(50px) rotate(5deg);
             }
+
             .mock-smartphone.tap {
                 transform: translateY(-20px) rotate(0deg);
             }
+        }
+        /* --- Web3 Smart Contract Ownership --- */
+        .web3-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: var(--glass);
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            padding: 2.5rem;
+            position: relative;
+        }
+
+        .web3-transfer-ui {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            background: rgba(0,0,0,0.4);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .web3-party {
+            text-align: center;
+            flex: 1;
+        }
+
+        .web3-party-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 1.5rem;
+            color: var(--accent-green);
+        }
+
+        .web3-arrow {
+            flex: 0.5;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            position: relative;
+        }
+
+        .web3-arrow::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-green);
+            transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .web3-arrow.animating::after {
+            width: 80%;
+        }
+
+        .web3-terminal {
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 15px;
+            padding: 1.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            color: #0f0;
+            min-height: 200px;
+            overflow-y: auto;
+            text-align: left;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,255,0,0.05);
+        }
+
+        .web3-terminal p {
+            margin-bottom: 5px;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: terminalLineIn 0.3s forwards;
+        }
+
+        @keyframes terminalLineIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .web3-terminal-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background: #0f0;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        .web3-status-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: var(--accent-green);
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+            display: none;
+            animation: popIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
     </style>
 </head>
@@ -1706,8 +1884,10 @@
             </div>
 
             <div class="timeline-item reveal predictive-alert" id="ai-predictive-timeline" style="display: none;">
-                <div class="timeline-dot" style="background: var(--accent-green); box-shadow: 0 0 10px var(--accent-green);"></div>
-                <div class="timeline-content" style="border: 1px solid var(--accent-green); background: rgba(46, 204, 113, 0.05);">
+                <div class="timeline-dot"
+                    style="background: var(--accent-green); box-shadow: 0 0 10px var(--accent-green);"></div>
+                <div class="timeline-content"
+                    style="border: 1px solid var(--accent-green); background: rgba(46, 204, 113, 0.05);">
                     <h4 style="color: var(--accent-green);">✦ AI Predictive Insight</h4>
                     <p id="predictive-text">Based on breed data, schedule joint screenings by age 5.</p>
                 </div>
@@ -1767,6 +1947,40 @@
                 <h3>180+</h3>
                 <p>Supported Countries</p>
             </div>
+        </div>
+    </section>
+
+    <section id="web3-ownership" class="section">
+        <div class="section-header reveal">
+            <h2>Immutable Proof of Ownership</h2>
+            <p>Powered by blockchain smart contracts, transferring pet ownership is now instantaneous and legally undeniable.</p>
+        </div>
+        <div class="web3-container reveal">
+            <h4 style="text-align: center; color: var(--accent-green); margin-bottom: 2rem;">Decentralized Transfer Protocol</h4>
+            
+            <div class="web3-transfer-ui">
+                <div class="web3-party">
+                    <div class="web3-party-icon">🏦</div>
+                    <p style="font-weight: bold; color: #fff; font-size: 0.9rem;">City Rescue Shelter</p>
+                    <p style="font-size: 0.7rem; color: var(--text-secondary);">Current Owner</p>
+                </div>
+                <div class="web3-arrow" id="web3-arrow">
+                    <span style="opacity: 0.5;">&rarr;</span>
+                </div>
+                <div class="web3-party">
+                    <div class="web3-party-icon" id="adopter-icon" style="color: var(--text-secondary);">👤</div>
+                    <p style="font-weight: bold; color: #fff; font-size: 0.9rem;">Jane Doe</p>
+                    <p style="font-size: 0.7rem; color: var(--text-secondary);" id="adopter-label">Pending Adopter</p>
+                </div>
+            </div>
+
+            <div class="web3-terminal" id="web3-terminal">
+                <div id="terminal-content"></div>
+                <span class="web3-terminal-cursor"></span>
+                <div class="web3-status-badge" id="web3-status-badge">TRANSFER VERIFIED ✓</div>
+            </div>
+
+            <button class="cta-btn" id="start-web3-transfer" style="width: 100%; margin-top: 2rem; background: #2c3e50; border-color: #2c3e50;">Execute Smart Contract</button>
         </div>
     </section>
 
@@ -1852,7 +2066,7 @@
         </div>
         <div class="scanner-container reveal">
             <h4 style="color: var(--accent-green); text-align: center;">Smart Scan Engine</h4>
-            
+
             <div class="scan-window">
                 <!-- Messy Paper Layer -->
                 <div class="paper-record">
@@ -1867,13 +2081,16 @@
 
                 <!-- Clean Digital Layer -->
                 <div class="digital-record" id="digital-record">
-                    <p style="font-weight: 700; margin-bottom: 20px; text-transform: uppercase;">✓ Verified Health Log</p>
+                    <p style="font-weight: 700; margin-bottom: 20px; text-transform: uppercase;">✓ Verified Health Log
+                    </p>
                     <div class="record-entry"><span>NAME</span> <span>BUDDY</span></div>
                     <div class="record-entry"><span>SPECIES</span> <span>CANINE</span></div>
                     <div class="record-entry"><span>VACCINE</span> <span>RABIES (CERTIFIED)</span></div>
                     <div class="record-entry"><span>DATE</span> <span>APRIL 12, 2022</span></div>
                     <div class="record-entry"><span>WEIGHT</span> <span>32.50 KG</span></div>
-                    <div class="record-entry"><span>STATUS</span> <span style="color: #fff; background: var(--accent-green); padding: 2px 8px; border-radius: 4px; font-size: 0.7rem;">VERIFIED</span></div>
+                    <div class="record-entry"><span>STATUS</span> <span
+                            style="color: #fff; background: var(--accent-green); padding: 2px 8px; border-radius: 4px; font-size: 0.7rem;">VERIFIED</span>
+                    </div>
                 </div>
 
                 <!-- The Laser -->
@@ -1917,7 +2134,9 @@
                     <i class="fas fa-fingerprint"></i>
                     AUTHENTICATE ACCESS
                 </button>
-                <p style="color: var(--text-secondary); font-size: 0.7rem; margin-top: 15px; text-transform: uppercase; letter-spacing: 2px;">AES-256 BANKING GRADE</p>
+                <p
+                    style="color: var(--text-secondary); font-size: 0.7rem; margin-top: 15px; text-transform: uppercase; letter-spacing: 2px;">
+                    AES-256 BANKING GRADE</p>
             </div>
         </div>
     </section>
@@ -1925,62 +2144,79 @@
     <section id="facial-recognition" class="section">
         <div class="section-header reveal">
             <h2>AI Facial Recognition</h2>
-            <p>Lost collars? No problem. Our AI matches found pets to their digital identity using advanced computer vision.</p>
+            <p>Lost collars? No problem. Our AI matches found pets to their digital identity using advanced computer
+                vision.</p>
         </div>
         <div class="face-scan-container reveal">
             <h4 style="color: #3498db; margin-bottom: 0.5rem;">"Found Pet" Scanner Demo</h4>
-            <p style="color: var(--text-secondary); font-size: 0.85rem;">Simulate scanning a found dog's face to check the global registry.</p>
-            
+            <p style="color: var(--text-secondary); font-size: 0.85rem;">Simulate scanning a found dog's face to check
+                the global registry.</p>
+
             <div class="face-viewport">
                 <!-- Mock "Camera" View -->
                 <div class="dog-face-mock" id="dog-face">🐕</div>
-                
+
                 <!-- Scanning UI -->
                 <div class="scanning-reticle" id="scanning-reticle"></div>
                 <div class="face-scan-laser" id="face-scan-laser"></div>
-                
+
                 <!-- Result -->
                 <div class="match-overlay" id="match-overlay">
                     ✓ MATCH FOUND: BUDDY (99.8%)
                 </div>
             </div>
 
-            <button class="cta-btn" id="start-face-scan" style="width: 100%; background: #3498db; border-color: #3498db; color: #fff;">Initialize AI Scan</button>
+            <button class="cta-btn" id="start-face-scan"
+                style="width: 100%; background: #3498db; border-color: #3498db; color: #fff;">Initialize AI
+                Scan</button>
         </div>
     </section>
 
     <section id="vet-dictation" class="section">
         <div class="section-header reveal">
             <h2>Voice-to-Vault AI</h2>
-            <p>Veterinarians save hours of data entry. Speak naturally, and our AI structures the medical log instantly.</p>
+            <p>Veterinarians save hours of data entry. Speak naturally, and our AI structures the medical log instantly.
+            </p>
         </div>
         <div class="dictation-container reveal">
             <div class="mic-button" id="dictate-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
                     <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
                     <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
                     <line x1="12" y1="19" x2="12" y2="23"></line>
                     <line x1="8" y1="23" x2="16" y2="23"></line>
                 </svg>
             </div>
-            
+
             <div class="audio-visualizer" id="audio-visualizer">
-                <div class="audio-bar"></div><div class="audio-bar"></div><div class="audio-bar"></div>
-                <div class="audio-bar"></div><div class="audio-bar"></div><div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
+                <div class="audio-bar"></div>
                 <div class="audio-bar"></div>
             </div>
 
             <div class="transcript-box" id="transcript-box">
-                <span id="transcript-text" style="color: #fff;"></span><span class="transcript-cursor" id="transcript-cursor"></span>
-                <p style="color: rgba(255,255,255,0.2); margin-top: 10px;" id="transcript-placeholder">Click microphone to start dictation simulation...</p>
+                <span id="transcript-text" style="color: #fff;"></span><span class="transcript-cursor"
+                    id="transcript-cursor"></span>
+                <p style="color: rgba(255,255,255,0.2); margin-top: 10px;" id="transcript-placeholder">Click microphone
+                    to start dictation simulation...</p>
             </div>
 
             <div class="structured-log-preview" id="structured-log">
-                <p style="color: var(--accent-green); font-size: 0.8rem; font-weight: bold; margin-bottom: 10px; text-transform: uppercase;">✓ Log Structured & Saved</p>
+                <p
+                    style="color: var(--accent-green); font-size: 0.8rem; font-weight: bold; margin-bottom: 10px; text-transform: uppercase;">
+                    ✓ Log Structured & Saved</p>
                 <div style="display: grid; grid-template-columns: 100px 1fr; gap: 5px; font-size: 0.9rem;">
-                    <span style="color: var(--text-secondary);">Diagnosis:</span> <span style="color: #fff;">Mild ear irritation (Left)</span>
-                    <span style="color: var(--text-secondary);">Treatment:</span> <span style="color: #fff;">Otomax drops prescribed</span>
-                    <span style="color: var(--text-secondary);">Follow-up:</span> <span style="color: #fff;">14 days</span>
+                    <span style="color: var(--text-secondary);">Diagnosis:</span> <span style="color: #fff;">Mild ear
+                        irritation (Left)</span>
+                    <span style="color: var(--text-secondary);">Treatment:</span> <span style="color: #fff;">Otomax
+                        drops prescribed</span>
+                    <span style="color: var(--text-secondary);">Follow-up:</span> <span style="color: #fff;">14
+                        days</span>
                 </div>
             </div>
         </div>
@@ -1991,7 +2227,7 @@
             <h2>Hardware Meets Software</h2>
             <p>A single tap of our NFC Smart Collar instantly pulls up the pet's entire digital identity.</p>
         </div>
-        
+
         <div class="nfc-showcase-container reveal">
             <!-- The Collar -->
             <div class="smart-collar" id="smart-collar-tag">
@@ -2001,21 +2237,28 @@
             <!-- The Phone -->
             <div class="mock-smartphone" id="mock-smartphone">
                 <div class="phone-screen" id="phone-screen">
-                    <div id="phone-standby" style="color: var(--text-secondary); font-size: 0.8rem;">Ready to scan...</div>
+                    <div id="phone-standby" style="color: var(--text-secondary); font-size: 0.8rem;">Ready to scan...
+                    </div>
                     <div class="phone-ui-content" id="phone-ui-content">
-                        <div style="width: 60px; height: 60px; background: #fff; border-radius: 50%; margin: 0 auto 15px;"></div>
+                        <div
+                            style="width: 60px; height: 60px; background: #fff; border-radius: 50%; margin: 0 auto 15px;">
+                        </div>
                         <h4 style="color: var(--accent-green); margin-bottom: 5px;">Buddy</h4>
-                        <p style="font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 15px;">Verified Profile ✓</p>
-                        <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; font-size: 0.7rem; text-align: left;">
+                        <p style="font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 15px;">Verified
+                            Profile ✓</p>
+                        <div
+                            style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; font-size: 0.7rem; text-align: left;">
                             <p style="color: #fff; margin-bottom: 5px;">Owner: Jane Doe</p>
                             <p style="color: #fff; margin-bottom: 5px;">Phone: 555-0198</p>
-                            <a href="#" style="color: var(--accent-green); text-decoration: none; font-weight: bold;">View Medical Records &rarr;</a>
+                            <a href="#"
+                                style="color: var(--accent-green); text-decoration: none; font-weight: bold;">View
+                                Medical Records &rarr;</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <div style="text-align: center;" class="reveal">
             <button class="cta-btn" id="trigger-nfc-tap">Simulate NFC Tap</button>
         </div>
@@ -2096,7 +2339,8 @@
 
     <!-- Pet-GPT Chat Widget -->
     <div class="chat-widget-btn" id="chat-toggle-btn">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10z"></path>
         </svg>
     </div>
@@ -2108,9 +2352,10 @@
                 <h4 style="color: #fff; font-size: 0.9rem;">Pet-GPT Assistant</h4>
                 <p style="font-size: 0.7rem; color: var(--accent-green);">Connected to Buddy's Vault</p>
             </div>
-            <span id="close-chat" style="margin-left: auto; cursor: pointer; color: var(--text-secondary); font-size: 1.5rem;">&times;</span>
+            <span id="close-chat"
+                style="margin-left: auto; cursor: pointer; color: var(--text-secondary); font-size: 1.5rem;">&times;</span>
         </div>
-        
+
         <div class="chat-messages" id="chat-messages">
             <div class="msg-bubble msg-ai">
                 Hi! I'm Buddy's AI health assistant. I can read his medical records. What would you like to know?
@@ -2123,7 +2368,8 @@
         <div class="chat-input-area">
             <input type="text" id="chat-input" placeholder="e.g. When is his rabies shot due?" autocomplete="off">
             <button id="send-chat-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <line x1="22" y1="2" x2="11" y2="13"></line>
                     <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                 </svg>
@@ -2236,7 +2482,6 @@
             const breedVal = e.target.value.toUpperCase();
             cardBreed.innerText = breedVal || 'GOLDEN RETRIEVER';
 
-            // AI Predictive Health Logic
             const lowerBreed = breedVal.toLowerCase();
             if (lowerBreed.includes('golden') || lowerBreed.includes('retriever')) {
                 aiPredictiveTimeline.style.display = 'block';
@@ -2259,14 +2504,13 @@
             cardChip.innerText = e.target.value.toUpperCase() || 'PID-9980-A';
         });
 
-        // Share Modal Logic
         const openShare = document.getElementById('open-share');
         const closeShare = document.getElementById('close-share');
         const modalOverlay = document.getElementById('modal-overlay');
         const accessCode = document.getElementById('access-code');
 
         openShare.addEventListener('click', () => {
-            // Generate a random 6-digit code
+
             const randomCode = Math.floor(100000 + Math.random() * 900000);
             accessCode.innerText = randomCode;
 
@@ -2283,14 +2527,13 @@
             }, 400);
         });
 
-        // Close on overlay click
+
         modalOverlay.addEventListener('click', (e) => {
             if (e.target === modalOverlay) {
                 closeShare.click();
             }
         });
 
-        // Safe Zone Simulation Logic
         const simulateBtn = document.getElementById('simulate-btn');
         const petDot = document.getElementById('pet-dot');
         const geofence = document.getElementById('geofence');
@@ -2305,15 +2548,14 @@
             simulateBtn.innerText = 'Pet Moving...';
             simulateBtn.disabled = true;
 
-            // Step 1: Move Pet Inside
             petDot.style.transform = 'translate(-20px, -20px)';
 
             setTimeout(() => {
-                // Step 2: Move Pet Outside
+
                 petDot.style.transform = 'translate(100px, 60px)';
 
                 setTimeout(() => {
-                    // Step 3: Trigger Alert
+
                     geofence.classList.add('alert');
                     alertBanner.style.display = 'block';
                     simulateBtn.innerText = 'Alert Triggered';
@@ -2322,7 +2564,7 @@
                     simulateBtn.style.color = '#fff';
 
                     setTimeout(() => {
-                        // Reset
+
                         geofence.classList.remove('alert');
                         alertBanner.style.display = 'none';
                         petDot.style.transform = 'translate(0, 0)';
@@ -2337,7 +2579,6 @@
             }, 2000);
         });
 
-        // AI Scanner Logic
         const startScanBtn = document.getElementById('start-scan-btn');
         const scanLaser = document.getElementById('scan-laser');
         const digitalRecord = document.getElementById('digital-record');
@@ -2347,15 +2588,13 @@
         startScanBtn.addEventListener('click', () => {
             if (isScanning) return;
             isScanning = true;
-            
+
             startScanBtn.innerText = 'Analyzing Record...';
             startScanBtn.disabled = true;
 
-            // Reset state
             scanLaser.style.top = '100%';
             digitalRecord.style.clipPath = 'inset(100% 0 0 0)';
 
-            // Scanning Animation
             let progress = 100;
             const scanInterval = setInterval(() => {
                 progress -= 1;
@@ -2368,7 +2607,7 @@
                     startScanBtn.style.background = 'transparent';
                     startScanBtn.style.borderColor = 'var(--accent-green)';
                     startScanBtn.style.color = 'var(--accent-green)';
-                    
+
                     setTimeout(() => {
                         isScanning = false;
                         startScanBtn.disabled = false;
@@ -2380,25 +2619,23 @@
             }, 30);
         });
 
-        // Digital Vault Logic
         const unlockBtn = document.getElementById('unlock-vault-btn');
         const vaultDoor = document.getElementById('vault-door');
 
         unlockBtn.addEventListener('click', () => {
             unlockBtn.innerText = 'Scanning...';
             unlockBtn.style.color = '#fff';
-            
+
             setTimeout(() => {
                 unlockBtn.innerText = 'Access Granted';
                 vaultDoor.classList.add('open');
-                
+
                 setTimeout(() => {
                     unlockBtn.style.display = 'none';
                 }, 1200);
             }, 1500);
         });
 
-        // Pet-GPT Chat Logic
         const chatToggleBtn = document.getElementById('chat-toggle-btn');
         const chatWindow = document.getElementById('chat-window');
         const closeChat = document.getElementById('close-chat');
@@ -2421,8 +2658,7 @@
             msgDiv.classList.add('msg-bubble');
             msgDiv.classList.add(isUser ? 'msg-user' : 'msg-ai');
             msgDiv.innerText = text;
-            
-            // Insert before typing indicator
+
             chatMessages.insertBefore(msgDiv, typingIndicator);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
@@ -2431,21 +2667,18 @@
             const query = chatInput.value.trim();
             if (!query) return;
 
-            // Add user message
             appendMessage(query, true);
             chatInput.value = '';
 
-            // Show typing
             typingIndicator.style.display = 'flex';
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            // Simulate AI delay and response
             setTimeout(() => {
                 typingIndicator.style.display = 'none';
-                
+
                 let response = "I've checked Buddy's vault. ";
                 const lowerQuery = query.toLowerCase();
-                
+
                 if (lowerQuery.includes('rabies') || lowerQuery.includes('shot') || lowerQuery.includes('vaccine')) {
                     response += "Buddy's last Rabies shot was April 12, 2022. He is due for a booster in Spring 2025.";
                 } else if (lowerQuery.includes('weight') || lowerQuery.includes('heavy')) {
@@ -2462,7 +2695,7 @@
         chatInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') handleSend();
         });
-        // Facial Recognition Logic
+
         const startFaceScanBtn = document.getElementById('start-face-scan');
         const faceScanLaser = document.getElementById('face-scan-laser');
         const scanningReticle = document.getElementById('scanning-reticle');
@@ -2474,22 +2707,20 @@
         startFaceScanBtn.addEventListener('click', () => {
             if (isFaceScanning) return;
             isFaceScanning = true;
-            
+
             startFaceScanBtn.innerText = 'Analyzing Biometrics...';
             startFaceScanBtn.disabled = true;
 
-            // Reset UI
             matchOverlay.style.display = 'none';
             dogFace.style.opacity = '1';
-            
-            // Show Reticle
+
             scanningReticle.style.opacity = '1';
-            
-            // Start Laser
+
+
             faceScanLaser.style.display = 'block';
             let pos = 0;
             let direction = 1;
-            
+
             const scanAnim = setInterval(() => {
                 pos += 5 * direction;
                 if (pos > 350) direction = -1;
@@ -2497,20 +2728,20 @@
                 faceScanLaser.style.top = pos + 'px';
             }, 20);
 
-            // Finish Scan
+
             setTimeout(() => {
                 clearInterval(scanAnim);
                 faceScanLaser.style.display = 'none';
                 scanningReticle.style.borderColor = 'var(--accent-green)';
-                
+
                 matchOverlay.style.display = 'block';
                 startFaceScanBtn.innerText = 'Profile Retrieved';
                 startFaceScanBtn.style.background = 'var(--accent-green)';
                 startFaceScanBtn.style.borderColor = 'var(--accent-green)';
                 startFaceScanBtn.style.color = '#000';
-                
+
                 setTimeout(() => {
-                    // Reset everything
+
                     isFaceScanning = false;
                     scanningReticle.style.opacity = '0';
                     matchOverlay.style.display = 'none';
@@ -2521,10 +2752,10 @@
                     startFaceScanBtn.style.borderColor = '#3498db';
                     startFaceScanBtn.style.color = '#fff';
                 }, 4000);
-                
+
             }, 3000);
         });
-        // Voice-to-Vault Logic
+
         const dictateBtn = document.getElementById('dictate-btn');
         const visualizer = document.getElementById('audio-visualizer');
         const transcriptBox = document.getElementById('transcript-box');
@@ -2540,33 +2771,30 @@
             if (isDictating) return;
             isDictating = true;
 
-            // Reset UI
             structuredLog.style.display = 'none';
             transcriptText.innerText = '';
             transcriptPlaceholder.style.display = 'none';
             transcriptCursor.style.display = 'inline-block';
-            
-            // Start recording state
+
             dictateBtn.classList.add('recording');
             visualizer.classList.add('active');
 
-            // Typewriter effect
             let i = 0;
             const typeWriter = setInterval(() => {
                 transcriptText.innerText += simulationText.charAt(i);
                 i++;
                 if (i >= simulationText.length) {
                     clearInterval(typeWriter);
-                    
+
                     // Stop recording state
                     dictateBtn.classList.remove('recording');
                     visualizer.classList.remove('active');
                     transcriptCursor.style.display = 'none';
-                    
+
                     // Show structured log after brief delay
                     setTimeout(() => {
                         structuredLog.style.display = 'block';
-                        
+
                         setTimeout(() => {
                             isDictating = false;
                             transcriptPlaceholder.style.display = 'block';
@@ -2574,7 +2802,7 @@
                             transcriptText.innerText = "";
                             structuredLog.style.display = 'none';
                         }, 5000);
-                        
+
                     }, 800);
                 }
             }, 50); // Speed of typing
@@ -2585,23 +2813,23 @@
         const smartCollarTag = document.getElementById('smart-collar-tag');
         const phoneScreen = document.getElementById('phone-screen');
         const phoneStandby = document.getElementById('phone-standby');
-        
+
         let isNfcSimulating = false;
 
         triggerNfcTap.addEventListener('click', () => {
             if (isNfcSimulating) return;
             isNfcSimulating = true;
-            
+
             triggerNfcTap.innerText = 'Scanning...';
             triggerNfcTap.disabled = true;
 
             // 1. Phone moves in
             mockSmartphone.classList.add('tap');
-            
+
             // 2. Collar pulses after a short delay
             setTimeout(() => {
                 smartCollarTag.classList.add('active');
-                
+
                 // 3. Screen updates
                 setTimeout(() => {
                     phoneStandby.style.display = 'none';
@@ -2609,23 +2837,101 @@
                     triggerNfcTap.innerText = 'Profile Loaded';
                     triggerNfcTap.style.background = 'transparent';
                     triggerNfcTap.style.color = 'var(--accent-green)';
-                    
+
                     // Reset Simulation
                     setTimeout(() => {
                         mockSmartphone.classList.remove('tap');
                         smartCollarTag.classList.remove('active');
                         phoneScreen.classList.remove('scanned');
                         phoneStandby.style.display = 'block';
-                        
+
                         triggerNfcTap.innerText = 'Simulate NFC Tap';
                         triggerNfcTap.disabled = false;
                         triggerNfcTap.style.background = 'var(--accent-green)';
                         triggerNfcTap.style.color = '#000';
                         isNfcSimulating = false;
                     }, 4000);
-                    
+
                 }, 500);
             }, 800);
+        });
+        // Web3 Smart Contract Logic
+        const web3TransferBtn = document.getElementById('start-web3-transfer');
+        const web3Arrow = document.getElementById('web3-arrow');
+        const terminalContent = document.getElementById('terminal-content');
+        const web3StatusBadge = document.getElementById('web3-status-badge');
+        const adopterIcon = document.getElementById('adopter-icon');
+        const adopterLabel = document.getElementById('adopter-label');
+        
+        let isWeb3Simulating = false;
+
+        const terminalLines = [
+            "> Initializing Ownership Transfer Protocol...",
+            "> Verifying Sender Identity: City Rescue Shelter [0xA7b4...9F21]",
+            "> Authenticating Recipient: Jane Doe [0x3B9c...E45D]",
+            "> Generating Cryptographic Hash...",
+            "> Hash: 8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+            "> Committing to Decentralized Ledger...",
+            "> Block Confirmed. Gas fee: 0.00014 ETH",
+            "> SUCCESS: Legal Ownership Transferred."
+        ];
+
+        web3TransferBtn.addEventListener('click', () => {
+            if (isWeb3Simulating) return;
+            isWeb3Simulating = true;
+            
+            web3TransferBtn.innerText = 'Processing Transaction...';
+            web3TransferBtn.disabled = true;
+
+            // Reset UI
+            terminalContent.innerHTML = '';
+            web3StatusBadge.style.display = 'none';
+            adopterIcon.style.color = 'var(--text-secondary)';
+            adopterLabel.innerText = 'Pending Adopter';
+            web3Arrow.classList.remove('animating');
+            
+            // Start Arrow Animation
+            setTimeout(() => {
+                web3Arrow.classList.add('animating');
+            }, 500);
+
+            // Simulate Terminal Lines
+            let lineIndex = 0;
+            const terminalInterval = setInterval(() => {
+                if (lineIndex < terminalLines.length) {
+                    const p = document.createElement('p');
+                    p.innerText = terminalLines[lineIndex];
+                    terminalContent.appendChild(p);
+                    const terminal = document.getElementById('web3-terminal');
+                    terminal.scrollTop = terminal.scrollHeight;
+                    lineIndex++;
+                } else {
+                    clearInterval(terminalInterval);
+                    
+                    // Finish state
+                    setTimeout(() => {
+                        web3StatusBadge.style.display = 'block';
+                        adopterIcon.style.color = 'var(--accent-green)';
+                        adopterLabel.innerText = 'Verified Legal Owner';
+                        adopterLabel.style.color = 'var(--accent-green)';
+                        
+                        web3TransferBtn.innerText = 'Contract Executed';
+                        web3TransferBtn.style.background = 'var(--accent-green)';
+                        web3TransferBtn.style.color = '#000';
+                        
+                        // Reset Simulation
+                        setTimeout(() => {
+                            isWeb3Simulating = false;
+                            web3TransferBtn.innerText = 'Execute Smart Contract';
+                            web3TransferBtn.disabled = false;
+                            web3TransferBtn.style.background = '#2c3e50';
+                            web3TransferBtn.style.color = '#fff';
+                            adopterLabel.style.color = 'var(--text-secondary)';
+                        }, 5000);
+                        
+                    }, 500);
+                }
+            }, 800); // Delay between terminal lines
         });
     </script>
 </body>
