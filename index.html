@@ -1751,6 +1751,98 @@
             display: none;
             animation: popIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        /* --- DNA Ancestry Chart --- */
+        .dna-container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: var(--glass);
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            padding: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 2rem;
+            position: relative;
+        }
+
+        .dna-chart-wrapper {
+            position: relative;
+            width: 250px;
+            height: 250px;
+        }
+
+        .dna-chart {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                #333 0deg,
+                #333 360deg
+            );
+            position: relative;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(0,0,0,0.8);
+            transition: background 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dna-chart-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 180px;
+            height: 180px;
+            background: var(--bg-color);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #222;
+        }
+
+        .dna-stats {
+            flex: 1;
+            min-width: 250px;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.5s ease;
+        }
+
+        .dna-stats.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .dna-trait {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .trait-color-box {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        .dna-alert {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            border-left: 4px solid #e74c3c;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 
@@ -1912,6 +2004,59 @@
                     <h4>Smart Monitoring</h4>
                     <p>Annual check-up histories and specialized vet reports consolidated into a single timeline.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="dna-ancestry" class="section">
+        <div class="section-header reveal">
+            <h2>Genetics & DNA Ancestry</h2>
+            <p>Integrates with premium consumer DNA kits (Embark, Wisdom Panel) to map biological lineage and inherited health markers.</p>
+        </div>
+        <div class="dna-container reveal">
+            <div class="dna-chart-wrapper">
+                <div class="dna-chart" id="dna-pie-chart">
+                    <div class="dna-chart-inner">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="1.5" style="margin-bottom: 5px;">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
+                            <path d="M15 12c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3z"></path>
+                        </svg>
+                        <span id="dna-status-text" style="color: var(--text-secondary); font-size: 0.7rem; font-weight: bold; text-transform: uppercase;">Awaiting Sync</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dna-stats" id="dna-stats-panel">
+                <h4 style="margin-bottom: 15px; color: #fff;">Breed Breakdown</h4>
+                <div class="dna-trait">
+                    <div style="display: flex; align-items: center;">
+                        <span class="trait-color-box" style="background: #3498db;"></span>
+                        <span style="color: #fff; font-size: 0.9rem;">Golden Retriever</span>
+                    </div>
+                    <span style="color: var(--text-secondary); font-weight: bold;">62%</span>
+                </div>
+                <div class="dna-trait">
+                    <div style="display: flex; align-items: center;">
+                        <span class="trait-color-box" style="background: #9b59b6;"></span>
+                        <span style="color: #fff; font-size: 0.9rem;">Poodle (Standard)</span>
+                    </div>
+                    <span style="color: var(--text-secondary); font-weight: bold;">28%</span>
+                </div>
+                <div class="dna-trait">
+                    <div style="display: flex; align-items: center;">
+                        <span class="trait-color-box" style="background: #f1c40f;"></span>
+                        <span style="color: #fff; font-size: 0.9rem;">Cocker Spaniel</span>
+                    </div>
+                    <span style="color: var(--text-secondary); font-weight: bold;">10%</span>
+                </div>
+                
+                <div class="dna-alert">
+                    <span style="color: #e74c3c; font-weight: bold;">⚠️ Genetic Marker Found:</span> Carrier for Progressive Retinal Atrophy (PRA-prcd). Added to health timeline for vet monitoring.
+                </div>
+            </div>
+            
+            <div style="width: 100%; text-align: center; margin-top: 10px;">
+                <button class="cta-btn" id="analyze-dna-btn" style="background: transparent; border-color: #3498db; color: #3498db;">Sync DNA Kit Data</button>
             </div>
         </div>
     </section>
@@ -2932,6 +3077,65 @@
                     }, 500);
                 }
             }, 800); // Delay between terminal lines
+        });
+        // DNA Ancestry Logic
+        const analyzeDnaBtn = document.getElementById('analyze-dna-btn');
+        const dnaPieChart = document.getElementById('dna-pie-chart');
+        const dnaStatsPanel = document.getElementById('dna-stats-panel');
+        const dnaStatusText = document.getElementById('dna-status-text');
+        
+        let isDnaSimulating = false;
+
+        analyzeDnaBtn.addEventListener('click', () => {
+            if (isDnaSimulating) return;
+            isDnaSimulating = true;
+            
+            analyzeDnaBtn.innerText = 'Sequencing Genome...';
+            analyzeDnaBtn.disabled = true;
+            dnaStatusText.innerText = 'ANALYZING...';
+            dnaStatusText.style.color = '#3498db';
+
+            // Reset
+            dnaPieChart.style.background = 'conic-gradient(#333 0deg, #333 360deg)';
+            dnaStatsPanel.classList.remove('visible');
+
+            setTimeout(() => {
+                // Apply conic gradient to simulate pie chart filling up
+                // 62% blue (#3498db) -> 223.2 deg
+                // 28% purple (#9b59b6) -> 100.8 deg (total 324)
+                // 10% yellow (#f1c40f) -> 36 deg (total 360)
+                dnaPieChart.style.background = `conic-gradient(
+                    #3498db 0deg 223.2deg,
+                    #9b59b6 223.2deg 324deg,
+                    #f1c40f 324deg 360deg
+                )`;
+                
+                dnaStatusText.innerText = 'SYNC COMPLETE';
+                dnaStatusText.style.color = 'var(--accent-green)';
+                
+                setTimeout(() => {
+                    dnaStatsPanel.classList.add('visible');
+                    
+                    analyzeDnaBtn.innerText = 'Profile Updated';
+                    analyzeDnaBtn.style.background = '#3498db';
+                    analyzeDnaBtn.style.color = '#fff';
+                    
+                    // Reset Simulation
+                    setTimeout(() => {
+                        isDnaSimulating = false;
+                        analyzeDnaBtn.innerText = 'Sync DNA Kit Data';
+                        analyzeDnaBtn.disabled = false;
+                        analyzeDnaBtn.style.background = 'transparent';
+                        analyzeDnaBtn.style.color = '#3498db';
+                        
+                        dnaPieChart.style.background = 'conic-gradient(#333 0deg, #333 360deg)';
+                        dnaStatsPanel.classList.remove('visible');
+                        dnaStatusText.innerText = 'AWAITING SYNC';
+                        dnaStatusText.style.color = 'var(--text-secondary)';
+                    }, 6000);
+                    
+                }, 800);
+            }, 1500);
         });
     </script>
 </body>
