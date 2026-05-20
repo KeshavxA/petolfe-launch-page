@@ -2067,6 +2067,142 @@
             from { opacity: 0.6; text-shadow: 0 0 5px rgba(231,76,60,0.5); }
             to { opacity: 1; text-shadow: 0 0 15px rgba(231,76,60,1); }
         }
+        /* --- AR Lost Pet Tracker --- */
+        .ar-container {
+            max-width: 400px;
+            margin: 50px auto;
+            position: relative;
+        }
+
+        .ar-phone-frame {
+            width: 100%;
+            height: 600px;
+            background: #000;
+            border: 12px solid #222;
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+        }
+
+        .ar-camera-view {
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(11, 26, 20, 0.8), rgba(11, 26, 20, 0.8)),
+                url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h100v100H0z" fill="none" stroke="%232ecc71" stroke-width="0.5" stroke-opacity="0.2"/></svg>');
+            background-size: cover, 50px 50px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .ar-ui-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .ar-header {
+            display: flex;
+            justify-content: space-between;
+            color: #fff;
+            font-size: 0.8rem;
+        }
+
+        .ar-rec {
+            color: #e74c3c;
+            animation: blink 1s infinite;
+        }
+
+        .ar-marker-container {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+        }
+
+        .ar-marker-container.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .ar-marker-container.found {
+            top: 50%;
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+
+        .ar-pin {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-green);
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            box-shadow: 0 0 20px var(--accent-green);
+            animation: float 2s infinite ease-in-out;
+            margin-bottom: 10px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: rotate(-45deg) translate(0, 0); }
+            50% { transform: rotate(-45deg) translate(-10px, -10px); }
+        }
+
+        .ar-label {
+            background: rgba(0,0,0,0.8);
+            border: 1px solid var(--accent-green);
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            backdrop-filter: blur(5px);
+            white-space: nowrap;
+        }
+
+        .ar-distance {
+            color: var(--accent-green);
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .ar-compass {
+            width: 60px;
+            height: 60px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .ar-compass-needle {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 4px; height: 30px;
+            background: var(--accent-green);
+            transform-origin: bottom center;
+            transform: translate(-50%, -100%) rotate(45deg);
+            border-radius: 2px;
+            transition: transform 1s ease;
+        }
+
+        .ar-compass-needle::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 50%;
+            background: #fff;
+            border-radius: 2px;
+        }
     </style>
 </head>
 
@@ -2563,6 +2699,43 @@
             <button class="cta-btn" id="start-face-scan"
                 style="width: 100%; background: #3498db; border-color: #3498db; color: #fff;">Initialize AI
                 Scan</button>
+        </div>
+    </section>
+
+    <section id="ar-tracker" class="section">
+        <div class="section-header reveal">
+            <h2>AR "Lost Pet" Tracker</h2>
+            <p>Leverage the global PetOlife network and Augmented Reality to physically locate a lost pet's signal.</p>
+        </div>
+        <div class="ar-container reveal">
+            <div class="ar-phone-frame">
+                <div class="ar-camera-view">
+                    
+                    <div class="ar-ui-overlay">
+                        <div class="ar-header">
+                            <span class="ar-rec">● REC</span>
+                            <span>AR TRACKING MODE</span>
+                        </div>
+                        
+                        <div class="ar-compass">
+                            <div class="ar-compass-needle" id="ar-compass-needle"></div>
+                        </div>
+                    </div>
+
+                    <div class="ar-marker-container" id="ar-marker">
+                        <div class="ar-pin"></div>
+                        <div class="ar-label">
+                            Buddy's Collar Signal <br>
+                            <span class="ar-distance" id="ar-distance">250m</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="cta-btn" id="start-ar-btn">Simulate Search Routine</button>
+            </div>
         </div>
     </section>
 
@@ -3554,6 +3727,70 @@
             }
 
         }, 2000); // Update every 2 seconds
+        // AR Lost Pet Tracker Logic
+        const startArBtn = document.getElementById('start-ar-btn');
+        const arMarker = document.getElementById('ar-marker');
+        const arDistance = document.getElementById('ar-distance');
+        const arCompassNeedle = document.getElementById('ar-compass-needle');
+        
+        let isArSimulating = false;
+
+        startArBtn.addEventListener('click', () => {
+            if(isArSimulating) return;
+            isArSimulating = true;
+            
+            startArBtn.innerText = 'Scanning for Signal...';
+            startArBtn.disabled = true;
+
+            // Reset
+            arMarker.classList.remove('active', 'found');
+            arDistance.innerText = '250m';
+            arCompassNeedle.style.transform = 'translate(-50%, -100%) rotate(45deg)';
+
+            setTimeout(() => {
+                arMarker.classList.add('active');
+                startArBtn.innerText = 'Signal Acquired';
+                startArBtn.style.background = 'var(--accent-green)';
+                startArBtn.style.color = '#000';
+                
+                let dist = 250;
+                let angle = 45;
+                
+                const huntInterval = setInterval(() => {
+                    dist -= Math.floor(Math.random() * 30 + 10);
+                    angle -= Math.floor(Math.random() * 10);
+                    
+                    if(dist <= 5) {
+                        dist = 0;
+                        clearInterval(huntInterval);
+                        arDistance.innerText = 'TARGET FOUND';
+                        arDistance.style.color = '#fff';
+                        arMarker.querySelector('.ar-label').style.background = 'var(--accent-green)';
+                        arMarker.classList.add('found');
+                        arCompassNeedle.style.transform = `translate(-50%, -100%) rotate(0deg)`;
+                        startArBtn.innerText = 'Pet Located ✓';
+                        
+                        setTimeout(() => {
+                            // Reset Simulation
+                            isArSimulating = false;
+                            startArBtn.innerText = 'Simulate Search Routine';
+                            startArBtn.disabled = false;
+                            startArBtn.style.background = 'var(--accent-green)';
+                            startArBtn.style.color = '#000';
+                            
+                            arMarker.classList.remove('active', 'found');
+                            arMarker.querySelector('.ar-label').style.background = 'rgba(0,0,0,0.8)';
+                            arDistance.style.color = 'var(--accent-green)';
+                        }, 5000);
+                        
+                    } else {
+                        arDistance.innerText = dist + 'm';
+                        arCompassNeedle.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
+                    }
+                }, 800);
+                
+            }, 1000);
+        });
     </script>
 </body>
 
